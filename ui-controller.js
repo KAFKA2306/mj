@@ -78,17 +78,31 @@ class UIController {
 
     // Generate realistic practice scenarios
     generatePracticeScenario() {
-        const scenarioTypes = [
-            'iishanten_multiple_waits',
-            'riichi_decision',
-            'defensive_play',
-            'yaku_building',
-            'efficiency_test',
-            'complex_wait_patterns'
-        ];
+        // Generate a more realistic random hand
+        const hand = [];
+        const allTiles = [];
         
-        const scenario = scenarioTypes[Math.floor(Math.random() * scenarioTypes.length)];
-        return this.createScenarioHand(scenario);
+        // Create available tiles (4 of each)
+        for (let suit of ['m', 'p', 's']) {
+            for (let num = 1; num <= 9; num++) {
+                for (let i = 0; i < 4; i++) {
+                    allTiles.push(num + suit);
+                }
+            }
+        }
+        for (let honor = 1; honor <= 7; honor++) {
+            for (let i = 0; i < 4; i++) {
+                allTiles.push(honor + 'z');
+            }
+        }
+        
+        // Shuffle and take 13 tiles
+        for (let i = allTiles.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allTiles[i], allTiles[j]] = [allTiles[j], allTiles[i]];
+        }
+        
+        return allTiles.slice(0, 13).sort(this.engine.compareTiles);
     }
 
     createScenarioHand(scenarioType) {
@@ -159,7 +173,17 @@ class UIController {
     createTileElement(tile, index) {
         const tileElement = document.createElement('div');
         tileElement.className = 'tile';
-        tileElement.textContent = this.engine.TILE_UNICODE[tile] || tile;
+        
+        // Try Unicode first, fallback to text representation
+        const unicodeTile = this.engine.TILE_UNICODE[tile];
+        if (unicodeTile) {
+            tileElement.textContent = unicodeTile;
+        } else {
+            // Fallback to readable text
+            tileElement.textContent = this.formatTileText(tile);
+            tileElement.classList.add('fallback');
+        }
+        
         tileElement.dataset.tile = tile;
         tileElement.dataset.index = index;
         
@@ -170,9 +194,27 @@ class UIController {
         // Accessibility
         tileElement.setAttribute('role', 'button');
         tileElement.setAttribute('tabindex', '0');
-        tileElement.setAttribute('aria-label', `Tile ${tile}`);
+        tileElement.setAttribute('aria-label', `Tile ${this.formatTileText(tile)}`);
         
         return tileElement;
+    }
+
+    formatTileText(tile) {
+        const suit = tile.slice(-1);
+        const num = parseInt(tile.slice(0, -1));
+        
+        const suitNames = {
+            'm': 'M',  // Man/Characters
+            'p': 'P',  // Pin/Circles
+            's': 'S',  // Sou/Bamboo
+            'z': ['E', 'S', 'W', 'N', 'W', 'G', 'R'][num - 1] || 'H' // Winds/Dragons
+        };
+        
+        if (suit === 'z') {
+            return suitNames[suit];
+        } else {
+            return num + suitNames[suit];
+        }
     }
 
     // Wall rendering
@@ -528,7 +570,8 @@ class UIController {
         toast.className = `toast toast-${type}`;
         toast.textContent = message;
         
-        document.body.appendChild(toast);
+        const container = document.getElementById('toastContainer') || document.body;
+        container.appendChild(toast);
         
         // Auto-remove after 3 seconds
         setTimeout(() => {

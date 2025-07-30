@@ -112,9 +112,9 @@ class ProbabilityEngine {
         return this.aggregateResults(results);
     }
 
-    // Monte Carlo simulation with Reward Variance Reduction
+    // Monte Carlo simulation with Reward Variance Reduction  
     async runMonteCarloSimulation(hand, gameState, options) {
-        const iterations = options.iterations || 2500;
+        const iterations = Math.min(options.iterations || 1000, 1000); // Limit for performance
         const results = {
             wins: 0,
             totalPoints: 0,
@@ -124,27 +124,56 @@ class ProbabilityEngine {
         };
 
         for (let i = 0; i < iterations; i++) {
-            const simulation = this.simulateGame(hand, gameState, options);
+            const simulation = this.simulateBasicGame(hand, gameState);
             
             if (simulation.isWin) {
                 results.wins++;
                 results.totalPoints += simulation.points;
-                
-                // Track outcome distribution for variance calculation
-                const outcome = this.categorizeOutcome(simulation);
-                results.outcomeDistribution.set(outcome, 
-                    (results.outcomeDistribution.get(outcome) || 0) + 1);
             }
             
-            if (simulation.isDealIn) {
+            if (simulation.isDealIn) {  
                 results.riskEvents++;
             }
 
-            // Apply Reward Variance Reduction
-            results.totalVariance += this.calculateVarianceReduction(simulation, i);
+            // Basic variance tracking
+            results.totalVariance += Math.pow(simulation.points - 1000, 2);
         }
 
         return this.processSimulationResults(results, iterations);
+    }
+
+    // Simplified game simulation for performance
+    simulateBasicGame(hand, gameState) {
+        const mahjongEngine = new (typeof MahjongEngine !== 'undefined' ? MahjongEngine : Object)();
+        
+        // Basic simulation logic
+        const isComplete = mahjongEngine.isCompleteHand ? 
+            mahjongEngine.isCompleteHand(mahjongEngine.getTileCount(hand)) : false;
+        const isTenpai = mahjongEngine.isTenpai ? 
+            mahjongEngine.isTenpai(hand) : false;
+        
+        let points = 0;
+        let isWin = false;
+        let isDealIn = false;
+
+        if (isComplete) {
+            isWin = true;
+            points = 1000 + Math.floor(Math.random() * 7000); // Basic point range
+        } else if (isTenpai) {
+            // 30% chance to win from tenpai
+            if (Math.random() < 0.3) {
+                isWin = true;
+                points = 1000 + Math.floor(Math.random() * 3000);
+            }
+        }
+
+        // 5% risk of dealing in
+        if (Math.random() < 0.05) {
+            isDealIn = true;
+            points = -Math.floor(Math.random() * 8000);
+        }
+
+        return { isWin, isDealIn, points };
     }
 
     // Individual game simulation

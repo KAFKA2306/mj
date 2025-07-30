@@ -185,8 +185,11 @@ class MahjongEngine {
         return waits;
     }
 
-    // Optimized complete hand detection
+    // Real complete hand detection
     isCompleteHand(tileCount) {
+        const totalTiles = Object.values(tileCount).reduce((sum, count) => sum + count, 0);
+        if (totalTiles !== 14) return false;
+
         const tiles = Object.keys(tileCount);
         
         // Check for 7 pairs (Chitoitsu)
@@ -194,47 +197,48 @@ class MahjongEngine {
             return true;
         }
 
-        // Check for 13 terminals (Kokushi)
+        // Check for 13 terminals (Kokushi)  
         if (this.isKokushi(tileCount)) {
             return true;
         }
 
-        // Standard 4 sets + 1 pair check
-        return this.canFormMelds(tileCount, 0, false);
+        // Standard 4 sets + 1 pair check - try each tile as pair
+        for (let pairTile of tiles) {
+            if (tileCount[pairTile] >= 2) {
+                const tempCount = { ...tileCount };
+                tempCount[pairTile] -= 2;
+                if (tempCount[pairTile] === 0) delete tempCount[pairTile];
+                
+                if (this.canFormMelds(tempCount, 0)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
 
-    canFormMelds(tileCount, melds, hasPair) {
+    canFormMelds(tileCount, melds = 0) {
         const tiles = Object.keys(tileCount).filter(tile => tileCount[tile] > 0);
         
         if (tiles.length === 0) {
-            return melds === 4 && hasPair;
+            return melds === 4;
         }
 
-        if (melds > 4 || (melds === 4 && hasPair)) {
+        if (melds >= 4) {
             return false;
         }
 
         const tile = tiles[0];
         const count = tileCount[tile];
 
-        // Try forming a pair
-        if (!hasPair && count >= 2) {
-            const newCount = { ...tileCount };
-            newCount[tile] -= 2;
-            if (newCount[tile] === 0) delete newCount[tile];
-            
-            if (this.canFormMelds(newCount, melds, true)) {
-                return true;
-            }
-        }
-
-        // Try forming a triplet
+        // Try forming a triplet first
         if (count >= 3) {
             const newCount = { ...tileCount };
             newCount[tile] -= 3;
             if (newCount[tile] === 0) delete newCount[tile];
             
-            if (this.canFormMelds(newCount, melds + 1, hasPair)) {
+            if (this.canFormMelds(newCount, melds + 1)) {
                 return true;
             }
         }
@@ -248,17 +252,17 @@ class MahjongEngine {
                 const tile2 = (num + 1) + suit;
                 const tile3 = (num + 2) + suit;
                 
-                if (tileCount[tile2] >= 1 && tileCount[tile3] >= 1) {
+                if ((tileCount[tile2] || 0) >= 1 && (tileCount[tile3] || 0) >= 1) {
                     const newCount = { ...tileCount };
-                    newCount[tile] -= 1;
-                    newCount[tile2] -= 1;
-                    newCount[tile3] -= 1;
+                    newCount[tile] = (newCount[tile] || 0) - 1;
+                    newCount[tile2] = (newCount[tile2] || 0) - 1;
+                    newCount[tile3] = (newCount[tile3] || 0) - 1;
                     
                     if (newCount[tile] === 0) delete newCount[tile];
                     if (newCount[tile2] === 0) delete newCount[tile2];
                     if (newCount[tile3] === 0) delete newCount[tile3];
                     
-                    if (this.canFormMelds(newCount, melds + 1, hasPair)) {
+                    if (this.canFormMelds(newCount, melds + 1)) {
                         return true;
                     }
                 }
@@ -276,36 +280,65 @@ class MahjongEngine {
         const terminals = ['1m', '9m', '1p', '9p', '1s', '9s', '1z', '2z', '3z', '4z', '5z', '6z', '7z'];
         const tiles = Object.keys(tileCount);
         
-        if (tiles.length !== 13) return false;
-        
+        // Must have exactly 13 different terminal/honor types
         let pairFound = false;
+        let terminalCount = 0;
+        
         for (let terminal of terminals) {
             const count = tileCount[terminal] || 0;
-            if (count === 0) return false;
+            if (count === 0) continue;
+            
+            terminalCount++;
             if (count === 2) {
-                if (pairFound) return false;
+                if (pairFound) return false; // Can only have one pair
                 pairFound = true;
-            } else if (count !== 1) {
-                return false;
+            } else if (count === 1) {
+                // Single tile is fine
+            } else {
+                return false; // Can't have triplets in kokushi
             }
         }
         
-        return pairFound;
+        // Must have all 13 terminals and exactly one pair
+        return terminalCount === 13 && pairFound;
     }
 
     // Calculate ukeire (tile acceptance) for efficiency analysis
     calculateUkeire(hand = this.hand) {
         const tileCount = this.getTileCount(hand);
-        const waits = this.findWaits(tileCount);
-        const wallCount = this.getTileCount(this.wall);
         
+        // For each possible tile, check if adding it improves the hand
         let totalUkeire = 0;
         const ukeireTiles = {};
+        const waits = [];
         
-        for (let wait of waits) {
-            const available = (wallCount[wait] || 0);
-            totalUkeire += available;
-            ukeireTiles[wait] = available;
+        for (let suit of ['m', 'p', 's']) {
+            for (let num = 1; num <= 9; num++) {
+                const tile = num + suit;
+                const improvement = this.calculateTileImprovement(tileCount, tile);
+                if (improvement > 0) {
+                    const available = this.countAvailableTiles(tile, hand);
+                    if (available > 0) {
+                        totalUkeire += available;
+                        ukeireTiles[tile] = available;
+                        waits.push(tile);
+                    }
+                }
+            }
+        }
+        
+        // Honor tiles
+        for (let honor = 1; honor <= 7; honor++) {
+            const tile = honor + 'z';
+            const improvement = this.calculateTileImprovement(tileCount, tile);
+            if (improvement > 0) {
+                const available = this.countAvailableTiles(tile, hand);
+                if (available > 0) {
+                    totalUkeire += available;
+                    ukeireTiles[tile] = available;
+                    waits.push(tile);
+                }
+            }
         }
         
         return {
@@ -313,6 +346,157 @@ class MahjongEngine {
             tiles: ukeireTiles,
             waits: waits
         };
+    }
+
+    calculateTileImprovement(tileCount, testTile) {
+        const currentShanten = this.calculateShanten(tileCount);
+        
+        // Add the test tile
+        const newCount = { ...tileCount };
+        newCount[testTile] = (newCount[testTile] || 0) + 1;
+        
+        const newShanten = this.calculateShanten(newCount);
+        
+        // Return improvement (negative shanten change is good)
+        return currentShanten - newShanten;
+    }
+
+    countAvailableTiles(tile, hand) {
+        const usedInHand = this.getTileCount(hand)[tile] || 0;
+        return Math.max(0, 4 - usedInHand);
+    }
+
+    // Shanten calculation using dynamic programming
+    calculateShanten(tileCountOrHand) {
+        let tileCount;
+        if (Array.isArray(tileCountOrHand)) {
+            tileCount = this.getTileCount(tileCountOrHand);
+        } else {
+            tileCount = tileCountOrHand;
+        }
+        
+        // Check for special hands first
+        const kokushiShanten = this.calculateKokushiShanten(tileCount);
+        const chitoitsuShanten = this.calculateChitoitsuShanten(tileCount);
+        const standardShanten = this.calculateStandardShanten(tileCount);
+        
+        return Math.min(kokushiShanten, chitoitsuShanten, standardShanten);
+    }
+
+    calculateKokushiShanten(tileCount) {
+        const terminals = ['1m', '9m', '1p', '9p', '1s', '9s', '1z', '2z', '3z', '4z', '5z', '6z', '7z'];
+        let different = 0;
+        let pair = false;
+        
+        for (let terminal of terminals) {
+            const count = tileCount[terminal] || 0;
+            if (count >= 1) different++;
+            if (count >= 2) pair = true;
+        }
+        
+        let shanten = 13 - different;
+        if (!pair) shanten++;
+        
+        return Math.max(0, shanten - 1); // -1 because we calculate from tenpai (0 shanten)
+    }
+
+    calculateChitoitsuShanten(tileCount) {
+        let pairs = 0;
+        let singles = 0;
+        
+        for (let tile of Object.keys(tileCount)) {
+            const count = tileCount[tile];
+            if (count >= 2) pairs++;
+            else if (count === 1) singles++;
+            if (count >= 4) return 99; // Can't have 4 of same tile in chitoitsu
+        }
+        
+        const shanten = 6 - pairs + Math.max(0, 7 - pairs - singles);
+        return Math.max(0, shanten);
+    }
+
+    calculateStandardShanten(tileCount) {
+        let minShanten = 8;
+        
+        // Try all possible pair combinations
+        const allTiles = Object.keys(tileCount);
+        
+        // Try without forming a pair first
+        const result = this.calculateMeldsAndPairs(tileCount, 0, 0);
+        minShanten = Math.min(minShanten, result.shanten);
+        
+        // Try each tile as a pair
+        for (let tile of allTiles) {
+            if (tileCount[tile] >= 2) {
+                const newCount = { ...tileCount };
+                newCount[tile] -= 2;
+                if (newCount[tile] === 0) delete newCount[tile];
+                
+                const result = this.calculateMeldsAndPairs(newCount, 0, 1);
+                minShanten = Math.min(minShanten, result.shanten);
+            }
+        }
+        
+        return minShanten;
+    }
+
+    calculateMeldsAndPairs(tileCount, melds, pairs) {
+        const tiles = Object.keys(tileCount).filter(tile => tileCount[tile] > 0);
+        if (tiles.length === 0) {
+            const neededMelds = Math.max(0, 4 - melds);
+            const neededPairs = Math.max(0, 1 - pairs);
+            return { shanten: neededMelds + neededPairs };
+        }
+
+        const tile = tiles[0];
+        const count = tileCount[tile];
+        let minShanten = 8;
+
+        // Try forming triplet
+        if (count >= 3) {
+            const newCount = { ...tileCount };
+            newCount[tile] -= 3;
+            if (newCount[tile] === 0) delete newCount[tile];
+            
+            const result = this.calculateMeldsAndPairs(newCount, melds + 1, pairs);
+            minShanten = Math.min(minShanten, result.shanten);
+        }
+
+        // Try forming sequence (suited tiles only)
+        if (this.isSuitedTile(tile)) {
+            const suit = tile.slice(-1);
+            const num = parseInt(tile.slice(0, -1));
+            
+            if (num <= 7) {
+                const tile2 = (num + 1) + suit;
+                const tile3 = (num + 2) + suit;
+                
+                if (tileCount[tile2] >= 1 && tileCount[tile3] >= 1) {
+                    const newCount = { ...tileCount };
+                    newCount[tile] -= 1;
+                    newCount[tile2] -= 1;  
+                    newCount[tile3] -= 1;
+                    
+                    Object.keys(newCount).forEach(t => {
+                        if (newCount[t] === 0) delete newCount[t];
+                    });
+                    
+                    const result = this.calculateMeldsAndPairs(newCount, melds + 1, pairs);
+                    minShanten = Math.min(minShanten, result.shanten);
+                }
+            }
+        }
+
+        // Skip this tile (for isolated tiles)
+        const newCount = { ...tileCount };
+        newCount[tile] -= 1;
+        if (newCount[tile] === 0) delete newCount[tile];
+        
+        const result = this.calculateMeldsAndPairs(newCount, melds, pairs);
+        const penalty = 1; // Penalty for not using the tile
+        minShanten = Math.min(minShanten, result.shanten + penalty);
+
+        return { shanten: minShanten };
     }
 
     // Monte Carlo simulation for probability calculation (optimized)
