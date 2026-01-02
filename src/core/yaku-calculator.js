@@ -85,13 +85,13 @@ class YakuCalculator {
         }
 
         const analysis = this.performCompleteAnalysis(hand, gameState);
-        
+
         // LRU cache management for memory efficiency
         if (this.cache.size > 10000) {
             const firstKey = this.cache.keys().next().value;
             this.cache.delete(firstKey);
         }
-        
+
         this.cache.set(cacheKey, analysis);
         return analysis;
     }
@@ -100,7 +100,7 @@ class YakuCalculator {
         const tileCount = this.getTileCount(hand);
         const isComplete = this.isCompleteHand(tileCount);
         const isTenpai = this.isTenpai(hand);
-        
+
         const analysis = {
             completedYaku: [],
             potentialYaku: [],
@@ -133,7 +133,7 @@ class YakuCalculator {
     detectAllYaku(hand, gameState, isComplete) {
         const detectedYaku = [];
         const tileCount = this.getTileCount(hand);
-        
+
         // Basic yaku
         if (gameState.isRiichi) {
             detectedYaku.push({
@@ -213,9 +213,9 @@ class YakuCalculator {
 
     checkPinfu(hand, detectedYaku, gameState) {
         if (!gameState.isConcealed) return;
-        
+
         const tileCount = this.getTileCount(hand);
-        
+
         // Check if hand can form 4 sequences + 1 pair
         const hasPinfu = this.canFormAllSequences(tileCount, gameState);
 
@@ -235,19 +235,19 @@ class YakuCalculator {
         for (let honor = 1; honor <= 7; honor++) {
             if (tileCount[honor + 'z'] > 0) return false;
         }
-        
+
         // Try to form all sequences (this is a simplified check)
         // Real pinfu also requires specific wait patterns
         const tiles = Object.keys(tileCount);
         let sequenceCount = 0;
         let pairCount = 0;
-        
+
         for (let tile of tiles) {
             const count = tileCount[tile];
             if (count === 2) pairCount++;
             if (count >= 3) return false; // No triplets in pinfu
         }
-        
+
         // Simplified: if no triplets and exactly one pair, likely pinfu
         return pairCount === 1;
     }
@@ -256,7 +256,7 @@ class YakuCalculator {
         // Simplified iipeikou detection
         const tileCount = this.getTileCount(hand);
         const hasIipeikou = this.hasIdenticalSequences(tileCount);
-        
+
         if (hasIipeikou) {
             detectedYaku.push({
                 name: 'iipeikou',
@@ -276,11 +276,11 @@ class YakuCalculator {
                 const tile1 = num + suit;
                 const tile2 = (num + 1) + suit;
                 const tile3 = (num + 2) + suit;
-                
+
                 const count1 = tileCount[tile1] || 0;
                 const count2 = tileCount[tile2] || 0;
                 const count3 = tileCount[tile3] || 0;
-                
+
                 // If we have 2 of each in a sequence, it's likely iipeikou
                 if (count1 >= 2 && count2 >= 2 && count3 >= 2) {
                     return true;
@@ -332,7 +332,7 @@ class YakuCalculator {
 
     checkSanshokuDoujun(hand, detectedYaku) {
         const tileCount = this.getTileCount(hand);
-        
+
         // Check for same numbered sequences in all 3 suits
         for (let num = 1; num <= 7; num++) {
             const manTile = num + 'm';
@@ -344,17 +344,17 @@ class YakuCalculator {
             const manTile3 = (num + 2) + 'm';
             const pinTile3 = (num + 2) + 'p';
             const souTile3 = (num + 2) + 's';
-            
-            const hasManSeq = (tileCount[manTile] || 0) >= 1 && 
-                             (tileCount[manTile2] || 0) >= 1 && 
-                             (tileCount[manTile3] || 0) >= 1;
-            const hasPinSeq = (tileCount[pinTile] || 0) >= 1 && 
-                             (tileCount[pinTile2] || 0) >= 1 && 
-                             (tileCount[pinTile3] || 0) >= 1;
-            const hasSouSeq = (tileCount[souTile] || 0) >= 1 && 
-                             (tileCount[souTile2] || 0) >= 1 && 
-                             (tileCount[souTile3] || 0) >= 1;
-            
+
+            const hasManSeq = (tileCount[manTile] || 0) >= 1 &&
+                (tileCount[manTile2] || 0) >= 1 &&
+                (tileCount[manTile3] || 0) >= 1;
+            const hasPinSeq = (tileCount[pinTile] || 0) >= 1 &&
+                (tileCount[pinTile2] || 0) >= 1 &&
+                (tileCount[pinTile3] || 0) >= 1;
+            const hasSouSeq = (tileCount[souTile] || 0) >= 1 &&
+                (tileCount[souTile2] || 0) >= 1 &&
+                (tileCount[souTile3] || 0) >= 1;
+
             if (hasManSeq && hasPinSeq && hasSouSeq) {
                 detectedYaku.push({
                     name: 'sanshoku_doujun',
@@ -371,7 +371,7 @@ class YakuCalculator {
     checkChitoitsu(hand, detectedYaku) {
         const tileCount = this.getTileCount(hand);
         const tiles = Object.keys(tileCount);
-        
+
         if (tiles.length === 7 && tiles.every(tile => tileCount[tile] === 2)) {
             detectedYaku.push({
                 name: 'chitoitsu',
@@ -379,6 +379,294 @@ class YakuCalculator {
                 probability: 0.0451,
                 expectedValue: 7890,
                 description: 'Seven pairs'
+            });
+        }
+    }
+
+    checkIttsu(hand, detectedYaku) {
+        const tileCount = this.getTileCount(hand);
+        for (let suit of ['m', 'p', 's']) {
+            const hasFirst = (tileCount['1' + suit] || 0) >= 1 && (tileCount['2' + suit] || 0) >= 1 && (tileCount['3' + suit] || 0) >= 1;
+            const hasSecond = (tileCount['4' + suit] || 0) >= 1 && (tileCount['5' + suit] || 0) >= 1 && (tileCount['6' + suit] || 0) >= 1;
+            const hasThird = (tileCount['7' + suit] || 0) >= 1 && (tileCount['8' + suit] || 0) >= 1 && (tileCount['9' + suit] || 0) >= 1;
+            if (hasFirst && hasSecond && hasThird) {
+                detectedYaku.push({
+                    name: 'ittsu',
+                    han: 2,
+                    probability: 0.0213,
+                    expectedValue: 9876,
+                    description: 'Straight (1-9 in one suit)'
+                });
+                return;
+            }
+        }
+    }
+
+    checkChanta(hand, detectedYaku) {
+        const tileCount = this.getTileCount(hand);
+        const hasTerminalsOrHonors = Object.keys(tileCount).every(tile => {
+            const suit = tile.slice(-1);
+            const num = parseInt(tile.slice(0, -1));
+            return suit === 'z' || num === 1 || num === 9;
+        });
+        if (hasTerminalsOrHonors && Object.keys(tileCount).some(t => t.endsWith('z'))) {
+            detectedYaku.push({
+                name: 'chanta',
+                han: 2,
+                probability: 0.0187,
+                expectedValue: 8901,
+                description: 'All groups contain terminals or honors'
+            });
+        }
+    }
+
+    checkToitoi(hand, detectedYaku) {
+        const tileCount = this.getTileCount(hand);
+        const tiles = Object.keys(tileCount);
+        const tripletCount = tiles.filter(t => tileCount[t] >= 3).length;
+        if (tripletCount >= 4) {
+            detectedYaku.push({
+                name: 'toitoi',
+                han: 2,
+                probability: 0.0423,
+                expectedValue: 8012,
+                description: 'All triplets'
+            });
+        }
+    }
+
+    checkSanankou(hand, detectedYaku, gameState) {
+        if (!gameState.isConcealed) return;
+        const triplets = this.getTriplets(hand);
+        if (triplets.length >= 3) {
+            detectedYaku.push({
+                name: 'sanankou',
+                han: 2,
+                probability: 0.0214,
+                expectedValue: 9234,
+                description: 'Three concealed triplets'
+            });
+        }
+    }
+
+    checkSanshokuDoukou(hand, detectedYaku) {
+        const tileCount = this.getTileCount(hand);
+        for (let num = 1; num <= 9; num++) {
+            const hasMan = (tileCount[num + 'm'] || 0) >= 3;
+            const hasPin = (tileCount[num + 'p'] || 0) >= 3;
+            const hasSou = (tileCount[num + 's'] || 0) >= 3;
+            if (hasMan && hasPin && hasSou) {
+                detectedYaku.push({
+                    name: 'sanshoku_doukou',
+                    han: 2,
+                    probability: 0.0087,
+                    expectedValue: 10123,
+                    description: 'Three colored triplets'
+                });
+                return;
+            }
+        }
+    }
+
+    checkSankantsu(hand, detectedYaku, gameState) {
+        if ((gameState.kanCount || 0) >= 3) {
+            detectedYaku.push({
+                name: 'sankantsu',
+                han: 2,
+                probability: 0.0032,
+                expectedValue: 15678,
+                description: 'Three kans'
+            });
+        }
+    }
+
+    checkHonroutou(hand, detectedYaku) {
+        const isHonroutou = hand.every(tile => {
+            const suit = tile.slice(-1);
+            const num = parseInt(tile.slice(0, -1));
+            return suit === 'z' || num === 1 || num === 9;
+        });
+        if (isHonroutou) {
+            detectedYaku.push({
+                name: 'honroutou',
+                han: 2,
+                probability: 0.0076,
+                expectedValue: 18901,
+                description: 'All terminals and honors'
+            });
+        }
+    }
+
+    checkShousangen(hand, detectedYaku) {
+        const tileCount = this.getTileCount(hand);
+        const dragonCounts = [tileCount['5z'] || 0, tileCount['6z'] || 0, tileCount['7z'] || 0];
+        const triplets = dragonCounts.filter(c => c >= 3).length;
+        const pairs = dragonCounts.filter(c => c === 2).length;
+        if (triplets === 2 && pairs === 1) {
+            detectedYaku.push({
+                name: 'shousangen',
+                han: 2,
+                probability: 0.0098,
+                expectedValue: 12567,
+                description: 'Small three dragons'
+            });
+        }
+    }
+
+    checkHonitsu(hand, detectedYaku) {
+        const suits = new Set();
+        let hasHonors = false;
+        for (let tile of hand) {
+            const suit = tile.slice(-1);
+            if (suit === 'z') hasHonors = true;
+            else suits.add(suit);
+        }
+        if (suits.size === 1 && hasHonors) {
+            detectedYaku.push({
+                name: 'honitsu',
+                han: 3,
+                probability: 0.0312,
+                expectedValue: 11234,
+                description: 'Half flush (one suit + honors)'
+            });
+        }
+    }
+
+    checkJunchan(hand, detectedYaku) {
+        const isJunchan = hand.every(tile => {
+            const suit = tile.slice(-1);
+            const num = parseInt(tile.slice(0, -1));
+            return suit !== 'z' && (num === 1 || num === 9);
+        });
+        if (isJunchan) {
+            detectedYaku.push({
+                name: 'junchan',
+                han: 3,
+                probability: 0.0067,
+                expectedValue: 13456,
+                description: 'All groups contain terminals (no honors)'
+            });
+        }
+    }
+
+    checkRyanpeikou(hand, detectedYaku) {
+        const tileCount = this.getTileCount(hand);
+        let identicalSeqCount = 0;
+        for (let suit of ['m', 'p', 's']) {
+            for (let num = 1; num <= 7; num++) {
+                const c1 = tileCount[num + suit] || 0;
+                const c2 = tileCount[(num + 1) + suit] || 0;
+                const c3 = tileCount[(num + 2) + suit] || 0;
+                if (c1 >= 2 && c2 >= 2 && c3 >= 2) identicalSeqCount++;
+            }
+        }
+        if (identicalSeqCount >= 2) {
+            detectedYaku.push({
+                name: 'ryanpeikou',
+                han: 3,
+                probability: 0.0089,
+                expectedValue: 14567,
+                description: 'Two identical sequences'
+            });
+        }
+    }
+
+    checkChinitsu(hand, detectedYaku) {
+        const suits = new Set();
+        for (let tile of hand) {
+            const suit = tile.slice(-1);
+            if (suit === 'z') return;
+            suits.add(suit);
+        }
+        if (suits.size === 1) {
+            detectedYaku.push({
+                name: 'chinitsu',
+                han: 6,
+                probability: 0.0174,
+                expectedValue: 15678,
+                description: 'Full flush (one suit only)'
+            });
+        }
+    }
+
+    checkDaisangen(hand, detectedYaku) {
+        const tileCount = this.getTileCount(hand);
+        if ((tileCount['5z'] || 0) >= 3 && (tileCount['6z'] || 0) >= 3 && (tileCount['7z'] || 0) >= 3) {
+            detectedYaku.push({
+                name: 'daisangen',
+                han: 13,
+                probability: 0.00004,
+                expectedValue: 32000,
+                description: 'Big three dragons'
+            });
+        }
+    }
+
+    checkShousuushi(hand, detectedYaku) {
+        const tileCount = this.getTileCount(hand);
+        const windCounts = [tileCount['1z'] || 0, tileCount['2z'] || 0, tileCount['3z'] || 0, tileCount['4z'] || 0];
+        const triplets = windCounts.filter(c => c >= 3).length;
+        const pairs = windCounts.filter(c => c === 2).length;
+        if (triplets === 3 && pairs === 1) {
+            detectedYaku.push({
+                name: 'shousuushi',
+                han: 13,
+                probability: 0.00001,
+                expectedValue: 32000,
+                description: 'Small four winds'
+            });
+        }
+    }
+
+    checkTsuuiisou(hand, detectedYaku) {
+        if (hand.every(tile => tile.endsWith('z'))) {
+            detectedYaku.push({
+                name: 'tsuuiisou',
+                han: 13,
+                probability: 0.000005,
+                expectedValue: 32000,
+                description: 'All honors'
+            });
+        }
+    }
+
+    checkChinroutou(hand, detectedYaku) {
+        if (hand.every(tile => {
+            const suit = tile.slice(-1);
+            const num = parseInt(tile.slice(0, -1));
+            return suit !== 'z' && (num === 1 || num === 9);
+        })) {
+            detectedYaku.push({
+                name: 'chinroutou',
+                han: 13,
+                probability: 0.000002,
+                expectedValue: 32000,
+                description: 'All terminals'
+            });
+        }
+    }
+
+    checkRyuuiisou(hand, detectedYaku) {
+        const greenTiles = ['2s', '3s', '4s', '6s', '8s', '6z'];
+        if (hand.every(tile => greenTiles.includes(tile))) {
+            detectedYaku.push({
+                name: 'ryuuiisou',
+                han: 13,
+                probability: 0.000001,
+                expectedValue: 32000,
+                description: 'All green'
+            });
+        }
+    }
+
+    checkSuukantsu(hand, detectedYaku, gameState) {
+        if ((gameState.kanCount || 0) >= 4) {
+            detectedYaku.push({
+                name: 'suukantsu',
+                han: 13,
+                probability: 0.0000005,
+                expectedValue: 32000,
+                description: 'Four kans'
             });
         }
     }
@@ -398,7 +686,7 @@ class YakuCalculator {
     checkKokushi(hand, detectedYaku) {
         const terminals = ['1m', '9m', '1p', '9p', '1s', '9s', '1z', '2z', '3z', '4z', '5z', '6z', '7z'];
         const tileCount = this.getTileCount(hand);
-        
+
         if (this.isKokushi(tileCount)) {
             detectedYaku.push({
                 name: 'kokushi',
@@ -412,7 +700,7 @@ class YakuCalculator {
 
     checkSuuankou(hand, detectedYaku, gameState) {
         if (!gameState.isConcealed) return;
-        
+
         const triplets = this.getTriplets(hand);
         if (triplets.length === 4) {
             detectedYaku.push({
@@ -429,7 +717,7 @@ class YakuCalculator {
     calculateExpectedValue(hand, gameState) {
         const potentialYaku = this.detectAllYaku(hand, gameState, false);
         let totalEV = 0;
-        
+
         for (let yaku of potentialYaku) {
             const probability = yaku.probability * this.getGameStateModifier(gameState);
             const points = yaku.expectedValue;
@@ -439,7 +727,7 @@ class YakuCalculator {
         // Apply risk adjustment based on deal-in probability
         const dealInRisk = this.calculateDealInRisk(hand, gameState);
         const riskAdjustment = (1 - dealInRisk) * 0.3; // Risk penalty
-        
+
         return Math.round(totalEV * riskAdjustment);
     }
 
@@ -447,12 +735,12 @@ class YakuCalculator {
         const ukeire = this.calculateUkeire(hand);
         const turnsRemaining = Math.max(1, 18 - (gameState.turn || 1));
         const wallSize = gameState.wallSize || 70;
-        
+
         // Monte Carlo based probability with variance reduction (2024 research)
         const baseProbability = ukeire.total / wallSize;
         const turnAdjustment = Math.min(1, turnsRemaining / 18);
         const gameStateModifier = this.getGameStateModifier(gameState);
-        
+
         return Math.min(0.95, baseProbability * turnAdjustment * gameStateModifier);
     }
 
@@ -461,13 +749,13 @@ class YakuCalculator {
         const dangerousTiles = this.identifyDangerousTiles(gameState);
         const handTiles = new Set(hand);
         let riskScore = 0;
-        
+
         for (let tile of dangerousTiles) {
             if (handTiles.has(tile)) {
                 riskScore += dangerousTiles[tile] || 0.1;
             }
         }
-        
+
         return Math.min(0.8, riskScore / hand.length);
     }
 
@@ -509,22 +797,22 @@ class YakuCalculator {
 
     getGameStateModifier(gameState) {
         let modifier = 1.0;
-        
+
         if (gameState.turn <= 6) modifier *= this.CONDITIONAL_MODIFIERS.early_game;
         else if (gameState.turn <= 12) modifier *= this.CONDITIONAL_MODIFIERS.mid_game;
         else modifier *= this.CONDITIONAL_MODIFIERS.late_game;
-        
+
         if (gameState.isRiichi) modifier *= this.CONDITIONAL_MODIFIERS.riichi_declared;
         if (!gameState.isConcealed) modifier *= this.CONDITIONAL_MODIFIERS.open_hand;
         if (gameState.isTenpai) modifier *= this.CONDITIONAL_MODIFIERS.tenpai;
         if (gameState.isFuriten) modifier *= this.CONDITIONAL_MODIFIERS.furiten;
-        
+
         return modifier;
     }
 
     applyConditionalProbabilities(detectedYaku, gameState) {
         const modifier = this.getGameStateModifier(gameState);
-        
+
         return detectedYaku.map(yaku => ({
             ...yaku,
             probability: Math.min(1.0, yaku.probability * modifier),
