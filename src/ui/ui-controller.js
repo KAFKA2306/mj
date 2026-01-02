@@ -31,7 +31,9 @@ class UIController {
     constructor() {
         this.engine = new MahjongEngine();
         this.yakuCalculator = new YakuCalculator();
+        this.yakuCalculator = new YakuCalculator();
         this.probabilityEngine = new ProbabilityEngine();
+        this.scenarioValidator = new ScenarioValidator(this.engine, this.yakuCalculator, this.probabilityEngine);
 
         this.currentHand = [];
         this.selectedTiles = new Set();
@@ -547,11 +549,28 @@ class UIController {
         // Critical Thinking: Context-aware reasoning
         const tileText = this.formatTileText(tile);
 
+        // Use ScenarioValidator for detailed feedback
+        if (scenarioType === 'efficiency_test' || scenarioType === 'iishanten_multiple_waits') {
+            const validation = this.scenarioValidator.validateEfficiency(this.currentHand, tile);
+            return `${tileText}切り - ${validation.message}`;
+        }
+
         if (scenarioType === 'opponent_reading') {
+            const validation = this.scenarioValidator.validateDefense(this.currentHand, tile, this.getCurrentGameState());
+            if (!validation.isValid) {
+                return `${tileText}切り - [警告] ${validation.message}`;
+            }
             return `${tileText}切り - 相手の読みを考慮しつつ、${shanten}向聴で受け入れ${ukeire}枚を確保します。`;
         }
 
         if (scenarioType === 'defensive_play') {
+            const validation = this.scenarioValidator.validateDefense(this.currentHand, tile, this.getCurrentGameState());
+            if (validation.rating === 'Excellent') {
+                return `${tileText}切り - ${validation.message}`;
+            }
+            if (!validation.isValid) {
+                return `${tileText}切り - [危険] ${validation.message}`;
+            }
             if (this.isTheoreticallySafe(tile)) {
                 return `${tileText}切り - 安全度を重視しつつ手を進めます（${shanten}向聴）。`;
             }
