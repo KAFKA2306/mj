@@ -1,35 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solo Mahjong Practice Machine - Scientific Training Platform</title>
+    <title>一人麻雀練習機 - 科学的トレーニングプラットフォーム</title>
     <link rel="stylesheet" href="src/css/styles.css">
 </head>
+
 <body>
     <div class="container">
         <div class="header">
-            <h1>🀄 Solo Mahjong Practice Machine</h1>
-            <p>Scientific Training Platform with Expected Value Analysis</p>
+            <h1>🀄 一人麻雀練習機</h1>
+            <p>期待値分析機能を搭載した科学的トレーニングプラットフォーム</p>
         </div>
 
         <div class="game-board">
             <div class="hand-section">
-                <h3>Your Hand</h3>
+                <h3>あなたの手牌</h3>
                 <div class="tiles-container" id="playerHand">
                     <!-- Player tiles will be generated here -->
                 </div>
-                
+
                 <div class="controls">
-                    <button class="btn btn-primary" onclick="newHand()">New Hand</button>
-                    <button class="btn btn-secondary" onclick="analyzeBestPlay()">Analyze Best Play</button>
-                    <button class="btn btn-info" onclick="showAllPossibilities()">Show All Waits</button>
-                    <button class="btn btn-secondary" onclick="riichi()">Declare Riichi</button>
-                    <button class="btn btn-info" onclick="openScenarios()">Practice Scenarios</button>
+                    <button class="btn btn-primary" onclick="newHand()">配牌</button>
+                    <button class="btn btn-secondary" onclick="analyzeBestPlay()">最適打牌分析</button>
+                    <button class="btn btn-info" onclick="showAllPossibilities()">待ち牌表示</button>
+                    <button class="btn btn-secondary" onclick="riichi()">リーチ宣言</button>
+                    <button class="btn btn-info" onclick="openScenarios()">練習シナリオ</button>
                 </div>
 
                 <div class="wall-section">
-                    <h4>Wall (Remaining: <span id="wallCount">70</span>)</h4>
+                    <h4>残り牌数: <span id="wallCount">70</span></h4>
                     <div class="wall-tiles" id="wallDisplay">
                         <!-- Wall tiles visualization -->
                     </div>
@@ -37,10 +39,10 @@
             </div>
 
             <div class="analysis-panel">
-                <h3>📊 Scientific Analysis</h3>
-                
+                <h3>📊 科学的分析</h3>
+
                 <div class="yaku-analysis" id="yakuAnalysis">
-                    <h4>Expected Yaku & Values</h4>
+                    <h4>予想される役と点数</h4>
                     <div id="yakuList">
                         <!-- Yaku analysis will be displayed here -->
                     </div>
@@ -49,19 +51,19 @@
                 <div class="stats-section">
                     <div class="stat-card">
                         <div class="stat-value" id="winProbability">0%</div>
-                        <div class="stat-label">Win Probability</div>
+                        <div class="stat-label">和了確率</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="expectedValue">0</div>
-                        <div class="stat-label">Expected Value</div>
+                        <div class="stat-label">期待値</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="avgHan">0</div>
-                        <div class="stat-label">Average Han</div>
+                        <div class="stat-label">平均翻数</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="dealInRisk">0%</div>
-                        <div class="stat-label">Deal-in Risk</div>
+                        <div class="stat-label">放銃リスク</div>
                     </div>
                 </div>
             </div>
@@ -71,39 +73,45 @@
     <!-- Practice Scenarios Modal -->
     <div id="scenarioModal" class="modal">
         <div class="modal-content">
-            <h3>🎯 Practice Scenarios</h3>
+            <h3>🎯 練習シナリオ</h3>
             <div class="scenario-grid">
                 <div class="scenario-card" onclick="loadScenario('iishanten')">
-                    <h4>1-Shanten Mastery</h4>
-                    <p>Practice multiple wait patterns and efficiency</p>
+                    <h4>一向聴マスター</h4>
+                    <p>多面待ちと効率の練習</p>
                     <div class="difficulty">⭐⭐⭐</div>
                 </div>
                 <div class="scenario-card" onclick="loadScenario('riichi_decision')">
-                    <h4>Riichi Decision</h4>
-                    <p>When to declare riichi vs stay damaten</p>
+                    <h4>リーチ判断</h4>
+                    <p>リーチ宣言 vs ダマテンの判断</p>
                     <div class="difficulty">⭐⭐⭐⭐</div>
                 </div>
                 <div class="scenario-card" onclick="loadScenario('defensive')">
-                    <h4>Defensive Play</h4>
-                    <p>Reading opponents and safe tile selection</p>
+                    <h4>守備の練習</h4>
+                    <p>相手の手出し読みと安牌選択</p>
                     <div class="difficulty">⭐⭐⭐⭐⭐</div>
                 </div>
                 <div class="scenario-card" onclick="loadScenario('yaku_building')">
-                    <h4>Yaku Building</h4>
-                    <p>Optimize for maximum han combinations</p>
+                    <h4>手役作り</h4>
+                    <p>高打点を目指す手作り</p>
                     <div class="difficulty">⭐⭐⭐</div>
                 </div>
+                <!-- New Feature: Opponent Reading -->
+                <div class="scenario-card" onclick="loadScenario('opponent_reading')">
+                    <h4>相手の読みと心理</h4>
+                    <p>捨て牌読みと「テル」の学習</p>
+                    <div class="difficulty">⭐⭐⭐⭐</div>
+                </div>
             </div>
-            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button class="btn btn-secondary" onclick="closeModal()">閉じる</button>
         </div>
     </div>
 
     <!-- Analysis Results Modal -->
     <div id="analysisModal" class="modal">
         <div class="modal-content">
-            <h3>📊 Detailed Analysis</h3>
+            <h3>📊 詳細分析</h3>
             <div id="detailedAnalysis"></div>
-            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button class="btn btn-secondary" onclick="closeModal()">閉じる</button>
         </div>
     </div>
 
@@ -116,4 +124,5 @@
     <script src="src/core/research-integration.js"></script>
     <script src="src/ui/ui-controller.js"></script>
 </body>
+
 </html>

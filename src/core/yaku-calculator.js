@@ -141,7 +141,7 @@ class YakuCalculator {
                 han: 1,
                 probability: gameState.ippatsuChance || 0.083,
                 expectedValue: 7734,
-                description: 'Ready hand declaration'
+                description: 'リーチ宣言'
             });
         }
 
@@ -151,7 +151,7 @@ class YakuCalculator {
                 han: 2,
                 probability: 0.156,
                 expectedValue: 12345,
-                description: 'First turn riichi'
+                description: '第一ツモでリーチ'
             });
         }
 
@@ -161,7 +161,7 @@ class YakuCalculator {
                 han: 1,
                 probability: 0.124,
                 expectedValue: 6234,
-                description: 'Concealed self-draw'
+                description: '門前でのツモ和了'
             });
         }
 
@@ -206,7 +206,7 @@ class YakuCalculator {
                 han: 1,
                 probability: 0.2154,
                 expectedValue: 5123,
-                description: 'All simples (2-8, no honors)'
+                description: '断么九（2-8牌のみ）'
             });
         }
     }
@@ -225,10 +225,11 @@ class YakuCalculator {
                 han: 1,
                 probability: 0.1982,
                 expectedValue: 4567,
-                description: 'All sequences, no value pairs'
+                description: '平和（順子4組・役牌でない雀頭・両面待ち）'
             });
         }
     }
+
 
     canFormAllSequences(tileCount, gameState) {
         // Must not have any honor tiles for pinfu
@@ -461,7 +462,7 @@ class YakuCalculator {
                     han: 2,
                     probability: 0.0087,
                     expectedValue: 10123,
-                    description: 'Three colored triplets'
+                    description: '三色同刻'
                 });
                 return;
             }
@@ -475,7 +476,7 @@ class YakuCalculator {
                 han: 2,
                 probability: 0.0032,
                 expectedValue: 15678,
-                description: 'Three kans'
+                description: '三槓子'
             });
         }
     }
@@ -492,7 +493,7 @@ class YakuCalculator {
                 han: 2,
                 probability: 0.0076,
                 expectedValue: 18901,
-                description: 'All terminals and honors'
+                description: '混老頭（一九字牌のみ）'
             });
         }
     }
@@ -508,7 +509,7 @@ class YakuCalculator {
                 han: 2,
                 probability: 0.0098,
                 expectedValue: 12567,
-                description: 'Small three dragons'
+                description: '小三元'
             });
         }
     }
@@ -527,7 +528,7 @@ class YakuCalculator {
                 han: 3,
                 probability: 0.0312,
                 expectedValue: 11234,
-                description: 'Half flush (one suit + honors)'
+                description: '混一色（一色+字牌）'
             });
         }
     }
@@ -544,7 +545,7 @@ class YakuCalculator {
                 han: 3,
                 probability: 0.0067,
                 expectedValue: 13456,
-                description: 'All groups contain terminals (no honors)'
+                description: '純回全帯么九（純チャン）'
             });
         }
     }
@@ -566,7 +567,7 @@ class YakuCalculator {
                 han: 3,
                 probability: 0.0089,
                 expectedValue: 14567,
-                description: 'Two identical sequences'
+                description: '二盃口'
             });
         }
     }
@@ -584,7 +585,7 @@ class YakuCalculator {
                 han: 6,
                 probability: 0.0174,
                 expectedValue: 15678,
-                description: 'Full flush (one suit only)'
+                description: '清一色（一色のみ）'
             });
         }
     }
@@ -597,7 +598,7 @@ class YakuCalculator {
                 han: 13,
                 probability: 0.00004,
                 expectedValue: 32000,
-                description: 'Big three dragons'
+                description: '大三元'
             });
         }
     }
@@ -613,7 +614,7 @@ class YakuCalculator {
                 han: 13,
                 probability: 0.00001,
                 expectedValue: 32000,
-                description: 'Small four winds'
+                description: '小四喜'
             });
         }
     }
@@ -625,7 +626,7 @@ class YakuCalculator {
                 han: 13,
                 probability: 0.000005,
                 expectedValue: 32000,
-                description: 'All honors'
+                description: '字一色'
             });
         }
     }
@@ -641,7 +642,7 @@ class YakuCalculator {
                 han: 13,
                 probability: 0.000002,
                 expectedValue: 32000,
-                description: 'All terminals'
+                description: '清老頭'
             });
         }
     }
@@ -654,7 +655,7 @@ class YakuCalculator {
                 han: 13,
                 probability: 0.000001,
                 expectedValue: 32000,
-                description: 'All green'
+                description: '緑一色'
             });
         }
     }
@@ -666,7 +667,7 @@ class YakuCalculator {
                 han: 13,
                 probability: 0.0000005,
                 expectedValue: 32000,
-                description: 'Four kans'
+                description: '四槓子'
             });
         }
     }
@@ -693,7 +694,7 @@ class YakuCalculator {
                 han: 13,
                 probability: 0.00003,
                 expectedValue: 32000,
-                description: 'Thirteen terminals'
+                description: '国士無双'
             });
         }
     }
@@ -708,7 +709,7 @@ class YakuCalculator {
                 han: 13,
                 probability: 0.00006,
                 expectedValue: 32000,
-                description: 'Four concealed triplets'
+                description: '四暗刻'
             });
         }
     }
