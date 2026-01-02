@@ -745,12 +745,11 @@ class YakuCalculator {
     }
 
     calculateDealInRisk(hand, gameState) {
-        // Based on 2024 defensive statistics
         const dangerousTiles = this.identifyDangerousTiles(gameState);
         const handTiles = new Set(hand);
         let riskScore = 0;
 
-        for (let tile of dangerousTiles) {
+        for (let tile of Object.keys(dangerousTiles)) {
             if (handTiles.has(tile)) {
                 riskScore += dangerousTiles[tile] || 0.1;
             }
@@ -758,6 +757,7 @@ class YakuCalculator {
 
         return Math.min(0.8, riskScore / hand.length);
     }
+
 
     // Scientific metrics generation
     generateScientificMetrics(hand, gameState, analysis) {
