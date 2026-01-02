@@ -1,0 +1,19 @@
+site_name: 麻雀練習マシン (Mahjong Practice Machine)
+theme:
+  name: material
+  language: ja
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+nav:
+  - ホーム: index.md
+  - アーキテクチャ: ARCHITECTURE.md
+  - 研究・コラム:
+    - "相手の読みと心理": OPPONENT_READING.md
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
