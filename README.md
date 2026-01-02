@@ -1,185 +1,92 @@
 # 🀄 Solo Mahjong Practice Machine
-
-> **Revolutionary AI-powered Riichi Mahjong training platform with 2024 research integration**
+> **麻雀の「特異点」へ、ようこそ。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://kafka2306.github.io/mj/)
-[![Research](https://img.shields.io/badge/Research-2024%20AI-blue)](https://github.com/KAFKA2306/mj)
+[![GitHub Pages](https://img.shields.io/badge/PLAY%20NOW-INSTANT%20ACCESS-brightgreen?style=for-the-badge)](https://kafka2306.github.io/mj/)
+[![Research](https://img.shields.io/badge/POWERED%20BY-2024%20AI%20RESEARCH-blue?style=for-the-badge)](https://github.com/KAFKA2306/mj)
 
-## 🎯 **What is This?**
+<br>
 
-The **Solo Mahjong Practice Machine** is the world's most advanced Riichi Mahjong training platform, featuring:
+## ⚠️ **警告: これは「ゲーム」ではありません**
 
-- 🧠 **2024 AI Research Integration** - Tjong transformer with hierarchical decision-making
-- 📊 **Scientific Analysis** - Real-time expected value calculations with Tenhou statistics
-- 🎮 **Interactive Practice** - 6 specialized training scenarios
-- 📱 **Mobile Optimized** - Responsive design for any device
-- ⚡ **1B User Ready** - Performance optimized for massive scale
+これは、あなたの麻雀脳を不可逆的に改造する**科学的トレーニング装置**です。
 
-## 🚀 **Quick Start**
+99%のプレイヤーは「なんとなく」打っています。
+あなたは、そのままでいいのですか？
 
-### Option 1: Online (Instant Access)
-**Visit: [https://kafka2306.github.io/mj/](https://kafka2306.github.io/mj/)**
+もし、あなたが**「数理的根拠」**と**「圧倒的な論理」**で卓上を支配したいなら、
+このツールが最後の答えになるでしょう。
 
-### Option 2: Local Setup
-```bash
-git clone https://github.com/KAFKA2306/mj.git
-cd mj
-python3 -m http.server 8080
-# Open http://localhost:8080 in your browser
-```
+<br>
 
-### Option 3: Direct Download
-Simply download and open `index.html` in any modern web browser!
+<div align="center">
+  <a href="https://kafka2306.github.io/mj/">
+    <h1>🚀 今すぐ、進化する (ブラウザで起動)</h1>
+  </a>
+  <p><i>登録不要。インストール不要。1秒で起動。</i></p>
+</div>
 
-## ✨ **Features**
+<br>
 
-### 🧠 **AI-Powered Analysis**
-- **Real-time yaku detection** (30+ yaku supported)
-- **Expected value calculations** using 2024 Tenhou statistics
-- **Win probability analysis** with Monte Carlo simulations
-- **Risk assessment** using modern defensive theory
+## � **なぜ、このマシンなのか？**
 
-### 🎯 **Practice Scenarios**
-1. **1-Shanten Mastery** - Multiple wait patterns & efficiency ⭐⭐⭐
-2. **Riichi Decision** - When to declare vs. stay damaten ⭐⭐⭐⭐
-3. **Defensive Play** - Safe tile selection & reading ⭐⭐⭐⭐⭐
-4. **Yaku Building** - Optimize han combinations ⭐⭐⭐
-5. **Efficiency Test** - Tile efficiency knowledge ⭐⭐⭐
-6. **Complex Waits** - Advanced wait pattern recognition ⭐⭐⭐⭐
+### 1. **2024年最新論文 "Tjong Transformer" 実装**
+古いAIは捨ててください。
+本機は2024年の研究成果である **階層的意思決定モデル** を搭載。
+AIが「なぜその牌を切るのか？」という思考プロセスを、ミリ秒単位で可視化します。
 
-### 📊 **Scientific Metrics**
-- **Expected Value** with confidence intervals
-- **Win Probability** using hypergeometric distribution
-- **Deal-in Risk** assessment
-- **Tile Efficiency** ratings
-- **Shanten** calculations
+### 2. **「感覚」を「数値」に殺す**
+「流れ」や「運」という言葉は、敗者の言い訳です。
+- **期待値 (Expected Value)**: 1点単位の精密計算
+- **和了確率 (Win Probability)**: モンテカルロ・シミュレーションによる冷徹な予測
+- **危険度 (Risk Assessment)**: 現代守備理論に基づく完全なリスク管理
 
-## 🔬 **Research Integration**
+### 3. **10億(1B)人規模を想定した極限設計**
+あなたのスマホでも、PCでも、どんな環境でも。
+**ビット演算**を駆使した超高速エンジンが、ラグのない「思考のフロー状態」を提供します。
 
-This platform implements cutting-edge 2024 Mahjong AI research:
+<br>
 
-### **Tjong Transformer AI**
-- Hierarchical decision-making (Action → Tile selection)
-- Self-attention mechanism with 8 heads
-- 94.63% action decision accuracy
-- Fan backward technique for reward allocation
+## ⚔️ **トレーニング・メニュー**
 
-### **Modern Statistics**
-- **Tenhou Phoenix Room data** (547,213 games, 2024)
-- **Reward Variance Reduction** for stable learning
-- **Game Refinement Theory** analysis
-- **Monte Carlo Tree Search** enhancement
+ただ漫然と打つのは時間の無駄です。
+**目的意識的練習 (Deliberate Practice)** だけが、あなたを神域へ導きます。
 
-## 🎮 **How to Use**
+| シナリオ名 | 難易度 | 獲得スキル |
+|:--- |:---:|:--- |
+| **💀 相手の読みと心理** | ⭐⭐⭐⭐ | 捨て牌読み、ラグ読み、心理戦の科学 |
+| **🛡️ 鉄壁の守備** | ⭐⭐⭐⭐⭐ | ベタオリ、回し打ち、リスク管理の極意 |
+| **⚡ 1秒の一向聴** | ⭐⭐⭐ | 迷いを断つ、瞬発的な牌効率 |
+| **⚖️ リーチの損益分岐点** | ⭐⭐⭐⭐ | 統計に基づいた「押引き」の判断力 |
+| **🧩 複雑多面待ち** | ⭐⭐⭐⭐ | パターン認識の脳内回路を焼き付ける |
 
-### **Basic Practice**
-1. Click **"New Hand"** to generate a practice scenario
-2. Analyze the **Expected Yaku & Values** panel
-3. Select tiles and use **"Analyze Best Play"** for recommendations
-4. Declare **"Riichi"** when ready (if tenpai)
+<br>
 
-### **Targeted Training**
-1. Click **"Practice Scenarios"** to open the scenario menu
-2. Choose your skill focus (1-Shanten, Defense, etc.)
-3. Follow the guidance messages for each scenario
-4. Track your improvement with scientific metrics
+## 🔬 **Research Behind The Code**
 
-### **Advanced Features**
-- **Keyboard Shortcuts**: Ctrl+N (new hand), Ctrl+A (analyze), Ctrl+R (riichi)
-- **Mobile Gestures**: Touch tiles to select, swipe for interactions
-- **Scientific Display**: View confidence intervals and research insights
+本機は以下の論文・理論に基づいて構築されています。
 
-## 📱 **Device Compatibility**
+> *Li, J. et al. (2024). "Tjong: A Transformer-based Mahjong AI with Hierarchical Decision Making."*
 
-- ✅ **Desktop Browsers** - Chrome, Firefox, Safari, Edge
-- ✅ **Mobile Devices** - iOS Safari, Android Chrome
-- ✅ **Tablets** - Responsive layout adapts automatically
-- ✅ **Touch Screens** - Full touch gesture support
+- **Supervised Learning**: 天鳳鳳凰卓 54万ゲームの学習
+- **Reward Variance Reduction**: 強化学習における報酬分散の抑制
+- **Game Refinement Theory**: ゲームの「面白さ」の数理的最適化
 
-## 🏗️ **Technical Architecture**
+<br>
 
-### **Core Modules**
-- `mahjong-engine.js` - Game logic & tile representation
-- `yaku-calculator.js` - Comprehensive yaku detection
-- `probability-engine.js` - Monte Carlo & expected value
-- `research-integration.js` - 2024 AI research implementation
-- `ui-controller.js` - Interactive interface controller
+## 🌍 **Join the Evolution**
 
-### **Performance Features**
-- **Bit manipulation** for O(1) tile operations
-- **LRU caching** with 50K entry limit
-- **Parallel processing** simulation
-- **Memory optimization** for 1B users
+バグ報告、機能提案、あるいは革命的なアイデアがありますか？
+[Issues](https://github.com/KAFKA2306/mj/issues) で待っています。
 
-## 🎓 **Educational Value**
-
-### **For Beginners**
-- Learn **basic yaku** with real probability data
-- Understand **tile efficiency** through practice
-- Develop **reading skills** with defensive scenarios
-
-### **For Intermediate Players**
-- Master **complex wait patterns**
-- Optimize **riichi decisions** with scientific analysis
-- Improve **expected value** understanding
-
-### **For Advanced Players**
-- Study **2024 AI techniques** in action
-- Analyze **statistical edge cases**
-- Perfect **tournament-level** decision making
-
-## 🤝 **Contributing**
-
-We welcome contributions to make this platform even better!
-
-### **How to Contribute**
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### **Areas for Contribution**
-- 🎯 Additional practice scenarios
-- 🔬 More research paper implementations
-- 🌍 Internationalization (multiple languages)
-- 📊 Enhanced statistical displays
-- 🎨 UI/UX improvements
-
-## 📚 **Research Citations**
-
-This platform implements findings from:
-
-1. **Tjong: A transformer‐based Mahjong AI** (2024) - Li et al.
-2. **Tenhou.net Statistical Analysis** (Phoenix Room, 2024)
-3. **Reward Variance Reduction in Deep RL** (2024)
-4. **Game Refinement Theory for Mahjong** (2024)
-5. **Monte Carlo Methods in Incomplete Information Games** (2024)
-
-## 🐛 **Bug Reports & Feature Requests**
-
-Found an issue or have an idea? [Open an issue](https://github.com/KAFKA2306/mj/issues)!
-
-## 📄 **License**
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 **Acknowledgments**
-
-- **Tenhou.net** for providing statistical data
-- **Research community** for advancing Mahjong AI
-- **Open source contributors** making this platform better
-- **Mahjong players worldwide** for inspiration
-
-## 🌟 **Star This Project**
-
-If this platform helps improve your Mahjong skills, please ⭐ star this repository!
+**Star ⭐ を押して、このプロジェクトを観測してください。**
 
 ---
 
-**🎯 Ready to revolutionize your Mahjong training? [Start practicing now!](https://kafka2306.github.io/mj/)**
-
----
-
-*Built with scientific precision and AI innovation • Optimized for 1 billion users • Ready for the future of Mahjong training*
+<div align="center">
+  <h3>Ready to Dominate?</h3>
+  <br>
+  <a href="https://kafka2306.github.io/mj/">
+    <img src="https://img.shields.io/badge/START-TRAINING_NOW-ff0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Play Now" height="50">
+  </a>
+</div>
