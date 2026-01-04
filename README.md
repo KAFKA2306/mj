@@ -1,92 +1,72 @@
 # 🀄 Solo Mahjong Practice Machine
-> **麻雀の「特異点」へ、ようこそ。**
+Scientific training platform with AI analysis.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Pages](https://img.shields.io/badge/PLAY%20NOW-INSTANT%20ACCESS-brightgreen?style=for-the-badge)](https://kafka2306.github.io/mj/)
-[![Research](https://img.shields.io/badge/POWERED%20BY-2024%20AI%20RESEARCH-blue?style=for-the-badge)](https://github.com/KAFKA2306/mj)
+[![GitHub Pages](https://img.shields.io/badge/PLAY-BROWSER-brightgreen?style=for-the-badge)](https://kafka2306.github.io/mj/)
+[![Research](https://img.shields.io/badge/AI-TJONG%20TRANSFORMER-blue?style=for-the-badge)](https://github.com/KAFKA2306/mj)
 
 <br>
 
-## ⚠️ **警告: これは「ゲーム」ではありません**
+## Overview
 
-これは、あなたの麻雀脳を不可逆的に改造する**科学的トレーニング装置**です。
-
-99%のプレイヤーは「なんとなく」打っています。
-あなたは、そのままでいいのですか？
-
-もし、あなたが**「数理的根拠」**と**「圧倒的な論理」**で卓上を支配したいなら、
-このツールが最後の答えになるでしょう。
-
-<br>
+This is a Mahjong training tool designed to analyze decision-making using AI and mathematical models. It provides real-time feedback on discard efficiency, risk assessment, and expected value (EV).
 
 <div align="center">
   <a href="https://kafka2306.github.io/mj/">
-    <h1>🚀 今すぐ、進化する (ブラウザで起動)</h1>
+    <h1>Launch Application</h1>
   </a>
-  <p><i>登録不要。インストール不要。1秒で起動。</i></p>
+  <p><i>Web-based. No installation required.</i></p>
 </div>
 
 <br>
 
-## � **なぜ、このマシンなのか？**
+## Features
 
-### 1. **2024年最新論文 "Tjong Transformer" 実装**
-古いAIは捨ててください。
-本機は2024年の研究成果である **階層的意思決定モデル** を搭載。
-AIが「なぜその牌を切るのか？」という思考プロセスを、ミリ秒単位で可視化します。
+### 1. **AI Model Implementation**
+Based on the 2024 research "Tjong Transformer", utilizing hierarchical decision-making models to analyze tile discards.
 
-### 2. **「感覚」を「数値」に殺す**
-「流れ」や「運」という言葉は、敗者の言い訳です。
-- **期待値 (Expected Value)**: 1点単位の精密計算
-- **和了確率 (Win Probability)**: モンテカルロ・シミュレーションによる冷徹な予測
-- **危険度 (Risk Assessment)**: 現代守備理論に基づく完全なリスク管理
+### 2. **Quantitative Metrics**
+- **Expected Value (EV)**: Score evaluation for each discard.
+- **Win Probability**: Monte Carlo simulation results.
+- **Risk Assessment**: Safety analysis based on defensive theory.
 
-### 3. **極限の低レイテンシー設計**
-あなたのスマホでも、PCでも、どんな環境でも。
-**ビット演算**を駆使した超高速エンジンが、ラグのない「思考のフロー状態」を提供します。
+### 3. **Performance**
+Optimized engine using bitwise operations for low-latency performance on standard web browsers.
 
 <br>
 
-## ⚔️ **トレーニング・メニュー**
+## Training Scenarios
 
-ただ漫然と打つのは時間の無駄です。
-**目的意識的練習 (Deliberate Practice)** だけが、あなたを神域へ導きます。
-
-| シナリオ名 | 難易度 | 獲得スキル |
+| Scenario | Difficulty | Focus |
 |:--- |:---:|:--- |
-| **💀 相手の読みと心理** | ⭐⭐⭐⭐ | 捨て牌読み、ラグ読み、心理戦の科学 |
-| **🛡️ 鉄壁の守備** | ⭐⭐⭐⭐⭐ | ベタオリ、回し打ち、リスク管理の極意 |
-| **⚡ 1秒の一向聴** | ⭐⭐⭐ | 迷いを断つ、瞬発的な牌効率 |
-| **⚖️ リーチの損益分岐点** | ⭐⭐⭐⭐ | 統計に基づいた「押引き」の判断力 |
-| **🧩 複雑多面待ち** | ⭐⭐⭐⭐ | パターン認識の脳内回路を焼き付ける |
+| **Opponent Reading** | ⭐⭐⭐⭐ | Discard reading and safety analysis |
+| **Defensive Play** | ⭐⭐⭐⭐⭐ | Folding (Betaori) and risk management |
+| **1-Shanten Efficiency** | ⭐⭐⭐ | Tile efficiency optimization |
+| **Riichi Decision** | ⭐⭐⭐⭐ | Risk/Reward analysis for reach judgment |
+| **Complex Waits** | ⭐⭐⭐⭐ | Multi-wait pattern recognition |
 
 <br>
 
-## 🔬 **Research Behind The Code**
+## Research References
 
-本機は以下の論文・理論に基づいて構築されています。
+Based on the following research:
 
 > *Li, X. et al. (2024). "Tjong: A Transformer-based Mahjong AI with Hierarchical Decision Making."*
 
-- **Supervised Learning**: 天鳳鳳凰卓 54万ゲームの学習
-- **Reward Variance Reduction**: 強化学習における報酬分散の抑制
-- **Game Refinement Theory**: ゲームの「面白さ」の数理的最適化
+- **Supervised Learning**: Trained on 540k Tenhou Phoenix games.
+- **Methodology**: Hierarchical decision making and reward variance reduction.
 
 <br>
 
-## 🌍 **Join the Evolution**
+## Contributing
 
-バグ報告、機能提案、あるいは革命的なアイデアがありますか？
-[Issues](https://github.com/KAFKA2306/mj/issues) で待っています。
-
-**Star ⭐ を押して、このプロジェクトを観測してください。**
+Bug reports and feature suggestions are welcome.
+Please submit them via [Issues](https://github.com/KAFKA2306/mj/issues).
 
 ---
 
 <div align="center">
-  <h3>Ready to Dominate?</h3>
-  <br>
   <a href="https://kafka2306.github.io/mj/">
-    <img src="https://img.shields.io/badge/START-TRAINING_NOW-ff0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Play Now" height="50">
+    <img src="https://img.shields.io/badge/START-APP-ff0000?style=for-the-badge" alt="Start App" height="50">
   </a>
 </div>
