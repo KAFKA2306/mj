@@ -1,0 +1,77 @@
+/* Opponent Info Styles */
+.opponent-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.opponent-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.badge {
+    background: #e74c3c;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.9; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.opponent-river {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 40px;
+}
+
+/* Reuse tile styles but smaller for river */
+.opponent-river .tile {
+    width: 24px;
+    height: 34px;
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Lesson Container Styles */
+.lesson-container {
+    margin-top: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.1));
+    border-left: 4px solid #3498db;
+    border-radius: 0 8px 8px 0;
+}
+
+.lesson-header {
+    font-weight: bold;
+    color: #3498db;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lesson-content {
+    line-height: 1.6;
+    color: #ecf0f1;
+    font-size: 0.95em;
+}
+
+.hidden {
+    display: none !important;
+}

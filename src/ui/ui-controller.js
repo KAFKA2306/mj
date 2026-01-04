@@ -127,7 +127,7 @@ class UIController {
             [allTiles[i], allTiles[j]] = [allTiles[j], allTiles[i]];
         }
 
-        return allTiles.slice(0, 13).sort(this.engine.compareTiles);
+        return allTiles.slice(0, 14).sort(this.engine.compareTiles);
     }
 
     createScenarioHand(scenarioType) {
@@ -153,89 +153,138 @@ class UIController {
 
     // Scenario generators
     createIishantenHand() {
-        // Create a hand that's 1-shanten with multiple good waits
-        return ['1m', '2m', '3m', '4m', '5m', '6m', '7p', '8p', '9p', '2s', '3s', '4s', '5z'];
+        // Create a hand that's 1-shanten with multiple good waits + Draw
+        return ['1m', '2m', '3m', '4m', '5m', '6m', '7p', '8p', '9p', '2s', '3s', '4s', '5z', '6z'];
     }
 
     createRiichiDecisionHand() {
-        // Create a hand where riichi decision is non-trivial
-        return ['2m', '3m', '4m', '5m', '6m', '7m', '2p', '3p', '4p', '6s', '7s', '8s', '1z'];
+        // Create a hand where riichi decision is non-trivial + Draw (Tenpai)
+        return ['2m', '3m', '4m', '5m', '6m', '7m', '2p', '3p', '4p', '6s', '7s', '8s', '1z', '1z'];
     }
 
     createDefensiveHand() {
-        // Create a hand requiring defensive play
-        return ['1m', '9m', '1p', '9p', '1s', '9s', '1z', '2z', '3z', '4z', '5z', '6z', '7z'];
+        // Create a hand requiring defensive play + Draw (Dangerous tile?)
+        return ['1m', '9m', '1p', '9p', '1s', '9s', '1z', '2z', '3z', '4z', '5z', '6z', '7z', '4p'];
     }
 
     createYakuBuildingHand() {
-        // Create a hand with multiple yaku possibilities
-        return ['1m', '1m', '2m', '3m', '7m', '7m', '7m', '2p', '3p', '4p', '5s', '6s', '7s'];
+        // Create a hand with multiple yaku possibilities + Draw
+        return ['1m', '1m', '2m', '3m', '7m', '7m', '7m', '2p', '3p', '4p', '5s', '6s', '7s', '8s'];
     }
 
     createEfficiencyTestHand() {
-        // Create a hand testing tile efficiency knowledge
-        return ['1m', '3m', '4m', '6m', '7m', '2p', '4p', '5p', '7p', '8p', '3s', '5s', '6s'];
+        // Create a hand testing tile efficiency knowledge + Draw
+        return ['1m', '3m', '4m', '6m', '7m', '2p', '4p', '5p', '7p', '8p', '3s', '5s', '6s', '8s'];
     }
 
     createComplexWaitHand() {
-        // Create a hand with complex wait patterns
-        return ['2m', '3m', '4m', '5m', '6m', '7m', '2p', '2p', '3p', '4p', '5s', '6s', '7s'];
+        // Create a hand with complex wait patterns + Draw
+        return ['2m', '3m', '4m', '5m', '6m', '7m', '2p', '2p', '3p', '4p', '5s', '6s', '7s', '8s'];
     }
 
     createOpponentReadingHand() {
-        // "Nanikiru" scenario requires 14 tiles (13 + 1 drawn)
-        // Hand: 123m 456p 789s 11z 222z (14th tile is 2z)
-        // This is a complete hand, but for reading practice we can give a hand 
-        // that requires a choice, e.g., a dangerous tile drawn.
-        // Let's give a hand that is 1-shanten or tenpai but requires a safe discard.
-        // Hand: 234m 567p 123s 99p 5z 5z (14 tiles: Tenpai for 9p/5z if we discard one?)
-        // Actually, let's just add one tile to the defensive hand idea, or standard hand.
-        // Defensive hand + 1 unsafe tile to discard?
-        return ['1m', '9m', '1p', '9p', '1s', '9s', '1z', '2z', '3z', '4z', '5z', '6z', '7z', '5p'];
+        // "Reading" scenario: Player needs complex defense or read
+        // Hand: 1-shanten but dangerous to push? Or just defensive practice.
+        // We will generate a specific "Opponent Context" here.
+
+        // Mock Opponent State
+        this.opponentContext = {
+            name: '下家 (Right)',
+            riichi: true, // Opponent has declared Riichi
+            discards: ['1m', '9m', '1p', '9p', '5z', '2s', '8s', '1m', '2p'], // Genbutsu
+            // Let's make it so '5m' is dangerous (suji 2-8?), wait, 
+            // if we want specific reading logic, we need to be consistent.
+            // Simple Riichi context for now.
+        };
+
+        // Render this context
+        this.renderOpponentInfo(this.opponentContext);
+
+        // Hand: Has some dangerous tiles and some safe tiles + Draw
+        return ['1m', '2m', '3m', '5m', '6m', '7m', '5p', '0p', '5p', '7s', '8s', '9s', '1z', '4z', '2z']; // Draw 2z (safe)
     }
 
-    // Hand rendering with performance optimization
+    renderOpponentInfo(context) {
+        const infoPanel = document.getElementById('opponentInfo');
+        infoPanel.classList.remove('hidden');
+
+        document.getElementById('opponentName').textContent = context.name;
+
+        const statusBadge = document.getElementById('opponentState');
+        if (context.riichi) {
+            statusBadge.classList.remove('hidden');
+            statusBadge.textContent = 'REACH';
+        } else {
+            statusBadge.classList.add('hidden');
+        }
+
+        const riverContainer = document.getElementById('opponentRiver');
+        riverContainer.innerHTML = '';
+
+        context.discards.forEach(tile => {
+            const tileEl = this.createTileElement(tile, -1);
+            tileEl.classList.add('river-tile');
+            riverContainer.appendChild(tileEl);
+        });
+    }
+
     renderHand() {
         const container = document.getElementById('playerHand');
-        const fragment = document.createDocumentFragment();
+        container.innerHTML = '';
 
         this.currentHand.forEach((tile, index) => {
             const tileElement = this.createTileElement(tile, index);
-            fragment.appendChild(tileElement);
-        });
 
-        // Batch DOM update for performance
-        container.innerHTML = '';
-        container.appendChild(fragment);
+            // Should separate the last tile if we have 14 tiles
+            if (this.currentHand.length === 14 && index === 13) {
+                tileElement.classList.add('tsumo-tile');
+            }
+
+            container.appendChild(tileElement);
+        });
     }
 
     createTileElement(tile, index) {
-        const tileElement = document.createElement('div');
-        tileElement.className = 'tile';
+        const element = document.createElement('div');
+        element.className = 'tile';
+        element.dataset.tile = tile;
+        element.dataset.index = index;
 
-        // Try Unicode first, fallback to text representation
-        const unicodeTile = this.engine.TILE_UNICODE[tile];
-        if (unicodeTile) {
-            tileElement.textContent = unicodeTile;
+        const tileChar = this.getTileCharacter(tile);
+        if (tileChar) {
+            element.textContent = tileChar;
         } else {
-            // Fallback to readable text
-            tileElement.textContent = this.formatTileText(tile);
-            tileElement.classList.add('fallback');
+            element.textContent = this.formatTileText(tile);
+            element.classList.add('fallback');
         }
 
-        tileElement.dataset.tile = tile;
-        tileElement.dataset.index = index;
+        if (index >= 0) {
+            element.addEventListener('click', this.handleTileClick.bind(this));
+            element.addEventListener('touchend', this.handleTileTouch.bind(this));
+        }
 
-        // Event listeners
-        tileElement.addEventListener('click', (e) => this.handleTileClick(e));
-        tileElement.addEventListener('touchstart', (e) => this.handleTileTouch(e));
+        return element;
+    }
 
-        // Accessibility
-        tileElement.setAttribute('role', 'button');
-        tileElement.setAttribute('tabindex', '0');
-        tileElement.setAttribute('aria-label', `Tile ${this.formatTileText(tile)}`);
+    getTileCharacter(tile) {
+        const suit = tile.slice(-1);
+        const num = parseInt(tile.slice(0, -1));
 
-        return tileElement;
+        const tileMap = {
+            'm': ['🀇', '🀈', '🀉', '🀊', '🀋', '🀌', '🀍', '🀎', '🀏'],
+            'p': ['🀙', '🀚', '🀛', '🀜', '🀝', '🀞', '🀟', '🀠', '🀡'],
+            's': ['🀐', '🀑', '🀒', '🀓', '🀔', '🀕', '🀖', '🀗', '🀘'],
+            'z': ['🀀', '🀁', '🀂', '🀃', '🀆', '🀅', '🀄']
+        };
+
+        if (suit === 'z' && num >= 1 && num <= 7) {
+            return tileMap[suit][num - 1];
+        } else if (tileMap[suit] && num >= 1 && num <= 9) {
+            return tileMap[suit][num - 1];
+        } else if (num === 0 && suit !== 'z') {
+            return tileMap[suit][4];
+        }
+        return null;
     }
 
     formatTileText(tile) {
@@ -252,6 +301,8 @@ class UIController {
         if (suit === 'z') {
             return suitNames[suit];
         } else {
+            // Handle red 5 (0)
+            if (num === 0) return '5' + suitNames[suit] + 'r';
             return num + suitNames[suit];
         }
     }
@@ -311,6 +362,7 @@ class UIController {
             this.displayYakuAnalysis(yakuAnalysis);
             this.displayProbabilityAnalysis(probabilityAnalysis);
             this.displayScientificMetrics(yakuAnalysis, probabilityAnalysis);
+            this.updateUkeireDisplay(this.currentHand);
 
         } catch (error) {
             console.error('Analysis error:', error);
@@ -318,6 +370,55 @@ class UIController {
         } finally {
             this.isAnalyzing = false;
             this.updatePerformanceMetrics('analysis', performance.now() - startTime);
+        }
+    }
+
+    // UI Constants for localization and maintenance
+    get UI_CONSTANTS() {
+        return {
+            UKEIRE_TITLE: '有効牌 (受け入れ)',
+            UKEIRE_SUMMARY: (count, total) => `受け入れ: ${count}種 ${total}牌`,
+            TILE_REMAINING: (count) => `残り${count}枚`
+        };
+    }
+
+    updateUkeireDisplay(hand) {
+        const ukeireContainer = document.getElementById('ukeireContainer');
+        const ukeireDisplay = document.getElementById('ukeireDisplay');
+        const ukeireCounts = document.getElementById('ukeireCounts');
+
+        if (!ukeireContainer || !ukeireDisplay) return;
+
+        // Calculate ukeire using the engine
+        if (this.engine.calculateUkeire) {
+            const ukeire = this.engine.calculateUkeire(hand);
+            const ukeireTiles = ukeire && ukeire.tiles ? Object.keys(ukeire.tiles) : [];
+
+            if (ukeireTiles.length > 0) {
+                ukeireContainer.style.display = 'block';
+                ukeireDisplay.innerHTML = '';
+
+                // Create tile elements for each accepted tile
+                ukeireTiles.forEach(tile => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'ukeire-tile-wrapper';
+
+                    const tileEl = this.createTileElement(tile, -1);
+                    const newEl = tileEl.cloneNode(true);
+
+                    const countBadge = document.createElement('div');
+                    countBadge.className = 'ukeire-count';
+                    countBadge.textContent = `x${ukeire.tiles[tile]}`;
+
+                    wrapper.appendChild(newEl);
+                    wrapper.appendChild(countBadge);
+                    ukeireDisplay.appendChild(wrapper);
+                });
+
+                ukeireCounts.textContent = this.UI_CONSTANTS.UKEIRE_SUMMARY(ukeireTiles.length, ukeire.total);
+            } else {
+                ukeireContainer.style.display = 'none';
+            }
         }
     }
 
@@ -330,7 +431,16 @@ class UIController {
         const allYaku = [...(analysis.completedYaku || []), ...(analysis.potentialYaku || [])];
 
         if (allYaku.length === 0) {
-            yakuList.innerHTML = '<div class="no-yaku">役が見つかりません。基本的な形を作ることに集中しましょう。</div>';
+            const shanten = this.engine.calculateShanten ? this.engine.calculateShanten(this.currentHand) : 3;
+
+            let message = '役が見つかりません。';
+            if (shanten <= 1) {
+                message = `手作り進行中 (${shanten}向聴)。有効牌を広げましょう。`;
+            } else {
+                message = '基本的な形を作ることに集中しましょう。';
+            }
+
+            yakuList.innerHTML = `<div class="no-yaku">${message}</div>`;
             return;
         }
 
@@ -408,6 +518,26 @@ class UIController {
         this.updateSelectionActions();
     }
 
+    updateSelectionActions() {
+        const discardBtn = document.getElementById('btnDiscard');
+        if (discardBtn) {
+            discardBtn.disabled = this.selectedTiles.size !== 1;
+
+            // Visual feedback for selection
+            if (this.selectedTiles.size === 1) {
+                discardBtn.classList.add('pulse');
+            } else {
+                discardBtn.classList.remove('pulse');
+            }
+        }
+    }
+
+    clearSelection() {
+        this.selectedTiles.clear();
+        document.querySelectorAll('.tile.selected').forEach(el => el.classList.remove('selected'));
+        this.updateSelectionActions();
+    }
+
     handleTileTouch(event) {
         event.preventDefault();
         this.handleTileClick(event);
@@ -449,8 +579,6 @@ class UIController {
         this.showAnalysisLoadingState();
 
         try {
-            const gameState = this.getCurrentGameState();
-
             // Calculate expected value for each possible discard
             // Pass the current scenario type for context-aware analysis
             const bestPlay = this.calculateOptimalDiscard(this.currentScenarioType);
@@ -465,6 +593,53 @@ class UIController {
             this.displayBasicRecommendation();
         } finally {
             this.hideAnalysisLoadingState();
+        }
+    }
+
+    // Active Training: Check user's discard choice
+    checkDiscard() {
+        if (this.selectedTiles.size !== 1) {
+            this.showErrorMessage('牌を選択してください');
+            return;
+        }
+
+        const selectedIndex = Array.from(this.selectedTiles)[0];
+        const selectedTile = this.currentHand[selectedIndex];
+
+        // Calculate optimal play to compare
+        const bestPlay = this.calculateOptimalDiscard(this.currentScenarioType);
+
+        // Calculate EV for user's choice
+        // We re-use part of calculateOptimalDiscard logic or sim it here
+        // For efficiency, let's look if it matches best play or is close
+
+        const isBest = selectedTile === bestPlay.tile;
+        // Simplified check: exact match
+
+        if (isBest) {
+            this.showSuccessMessage(`正解！ ${this.formatTileText(selectedTile)}切りは最善手です。 (${bestPlay.reasoning})`);
+            this.confettiEffect(); // Bonus: visuals
+        } else {
+            // Calculate value of user choice to show diff
+            // Quick re-calc for specific tile
+            const remainingHand = [...this.currentHand];
+            remainingHand.splice(selectedIndex, 1);
+            const shanten = this.engine.calculateShanten ? this.engine.calculateShanten(remainingHand) : 3;
+
+            this.showMessage(`惜しい！ 最善は ${this.formatTileText(bestPlay.tile)} です。(${bestPlay.reasoning})`, 'warning');
+        }
+
+        // Clear selection after check
+        this.clearSelection();
+    }
+
+    confettiEffect() {
+        // Simple visual cue (can be expanded later)
+        const toast = document.getElementById('toastContainer');
+        if (toast) {
+            toast.style.animation = 'none';
+            toast.offsetHeight; /* trigger reflow */
+            toast.style.animation = 'pulse 0.5s';
         }
     }
 
@@ -681,19 +856,36 @@ class UIController {
         // Select a random lesson
         const lesson = READING_LESSONS[Math.floor(Math.random() * READING_LESSONS.length)];
 
-        // Use a persistent toast or specific modal for the lesson
-        // For simplicity, using a long-duration success message for now, 
-        // ideally this should be a modal or a dismissible alert
+        const container = document.getElementById('lessonContainer');
+        const titleEl = document.getElementById('lessonTitle');
+        const contentEl = document.getElementById('lessonContent');
 
-        const message = `📚 【読みの学習】\n${lesson.title}\n\n${lesson.content}`;
+        if (container && titleEl && contentEl) {
+            container.classList.remove('hidden');
+            titleEl.textContent = lesson.title;
+            contentEl.textContent = lesson.content;
 
-        // Force a slightly longer timeout for this lesson toast if possible, 
-        // or just rely on showMessage default (3s might be short)
-        // Let's create a custom alert for this
-        alert(message); // Simple and effective for attention
+            // Auto-scroll to lesson if needed, or highlight it
+            container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+            console.warn('Lesson container elements not found');
+            // Fallback
+            this.showMessage(`📚 ${lesson.title}: ${lesson.content}`, 'info');
+        }
     }
 
     showScenarioGuidance(scenarioType) {
+        // Hide opponent info/lesson by default when switching scenarios
+        if (scenarioType !== 'opponent_reading') {
+            const oppInfo = document.getElementById('opponentInfo');
+            const lessonContainer = document.getElementById('lessonContainer');
+            if (oppInfo) oppInfo.classList.add('hidden');
+            if (lessonContainer) lessonContainer.classList.add('hidden');
+
+            // Clear context
+            this.opponentContext = null;
+        }
+
         const guidance = {
             'iishanten': '牌効率と多面待ちに集中してください。最も受け入れ枚数の多い打牌を探しましょう。',
             'riichi_decision': 'リーチするかダマテンに構えるかを判断します。手役の高さ、待ちの良さ、局面を考慮しましょう。',
@@ -724,7 +916,7 @@ class UIController {
 
     // Utility methods
     getCurrentGameState() {
-        return {
+        const baseState = {
             turn: this.engine.round,
             isRiichi: this.engine.isRiichi,
             isConcealed: true,
@@ -733,6 +925,28 @@ class UIController {
             wallSize: this.engine.wall.length,
             isTenpai: this.engine.isTenpai(this.currentHand)
         };
+
+        // Inject Opponent Context if available (for defensive validation)
+        if (this.opponentContext) {
+            baseState.opponentDiscards = this.opponentContext.discards;
+            baseState.riichiStick = this.opponentContext.riichi;
+
+            // Populate visible tiles map for Kabe check
+            const visibleTiles = {};
+            // Count discards
+            this.opponentContext.discards.forEach(t => {
+                visibleTiles[t] = (visibleTiles[t] || 0) + 1;
+            });
+            // Count own hand (visible to player)
+            this.currentHand.forEach(t => {
+                visibleTiles[t] = (visibleTiles[t] || 0) + 1;
+            });
+            // Add doras/open melds if we had them
+
+            baseState.visibleTiles = visibleTiles;
+        }
+
+        return baseState;
     }
 
     formatYakuName(yakuName) {
@@ -986,6 +1200,10 @@ function analyzeBestPlay() {
     if (uiController) uiController.analyzeBestPlay();
 }
 
+function checkDiscard() {
+    if (uiController) uiController.checkDiscard();
+}
+
 function showAllPossibilities() {
     if (uiController) uiController.showAllPossibilities();
 }
@@ -999,8 +1217,11 @@ function openScenarios() {
 }
 
 function closeModal() {
-    document.getElementById('scenarioModal').style.display = 'none';
-    document.getElementById('analysisModal').style.display = 'none';
+    const scenarioModal = document.getElementById('scenarioModal');
+    const analysisModal = document.getElementById('analysisModal');
+
+    if (scenarioModal) scenarioModal.style.display = 'none';
+    if (analysisModal) analysisModal.style.display = 'none';
 }
 
 function loadScenario(scenarioType) {

@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>一人麻雀練習機 - 科学的トレーニングプラットフォーム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="stylesheet" href="src/css/opponent.css">
 </head>
 
 <body>
@@ -13,116 +17,144 @@
         <div class="header">
             <h1>🀄 一人麻雀練習機</h1>
             <p>期待値分析機能を搭載した科学的トレーニングプラットフォーム</p>
+            <div class="header-controls">
+                <button class="btn btn-primary" onclick="newHand()">配牌</button>
+                <button id="btnDiscard" class="btn btn-success" onclick="checkDiscard()" disabled>打牌チェック</button>
+                <button class="btn btn-secondary" onclick="analyzeBestPlay()">最適打牌分析</button>
+                <button class="btn btn-info" onclick="showAllPossibilities()">待ち牌表示</button>
+                <button class="btn btn-secondary" onclick="riichi()">リーチ宣言</button>
+            </div>
         </div>
 
-        <div class="game-board">
-            <div class="hand-section">
-                <h3>あなたの手牌</h3>
-                <div class="tiles-container" id="playerHand">
-                    <!-- Player tiles will be generated here -->
+        <div class="main-layout">
+            <aside class="scenario-sidebar">
+                <h3>🎯 練習シナリオ</h3>
+                <div class="scenario-list">
+                    <div class="scenario-card" onclick="loadScenario('iishanten')">
+                        <h4>一向聴マスター</h4>
+                        <p>多面待ちと効率の練習</p>
+                        <div class="difficulty">⭐⭐⭐</div>
+                    </div>
+                    <div class="scenario-card" onclick="loadScenario('riichi_decision')">
+                        <h4>リーチ判断</h4>
+                        <p>リーチ宣言 vs ダマテンの判断</p>
+                        <div class="difficulty">⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="scenario-card" onclick="loadScenario('defensive')">
+                        <h4>守備の練習</h4>
+                        <p>相手の手出し読みと安牌選択</p>
+                        <div class="difficulty">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="scenario-card" onclick="loadScenario('yaku_building')">
+                        <h4>手役作り</h4>
+                        <p>高打点を目指す手作り</p>
+                        <div class="difficulty">⭐⭐⭐</div>
+                    </div>
+                    <div class="scenario-card" onclick="loadScenario('opponent_reading')">
+                        <h4>相手の読みと心理</h4>
+                        <p>捨て牌読みと「テル」の学習</p>
+                        <div class="difficulty">⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="game-board">
+                <div class="hand-section">
+                    <h3>あなたの手牌</h3>
+                    <div class="tiles-container" id="playerHand">
+                        <!-- Player tiles will be generated here -->
+                    </div>
+
+                    <div class="wall-section">
+                        <h4>残り牌数: <span id="wallCount">70</span></h4>
+                        <div class="wall-tiles" id="wallDisplay">
+                            <!-- Wall tiles visualization -->
+                        </div>
+                    </div>
+
+                    <!-- NEW: Opponent Context Section -->
+                    <div id="opponentInfo" class="opponent-info hidden">
+                        <h3>👤 対戦相手の状況</h3>
+                        <div class="opponent-status">
+                            <span id="opponentName">下家 (Right)</span>
+                            <span id="opponentState" class="badge">リーチ！</span>
+                        </div>
+                        <div class="opponent-river" id="opponentRiver">
+                            <!-- Discards will go here -->
+                        </div>
+                    </div>
+
+                    <!-- NEW: Lesson Display Section -->
+                    <div id="lessonContainer" class="lesson-container hidden">
+                        <div class="lesson-header">
+                            <span class="lesson-icon">📚</span>
+                            <span id="lessonTitle">読みのポイント</span>
+                        </div>
+                        <div id="lessonContent" class="lesson-content">
+                            <!-- Lesson text -->
+                        </div>
+                    </div>
                 </div>
 
-                <div class="controls">
-                    <button class="btn btn-primary" onclick="newHand()">配牌</button>
-                    <button class="btn btn-secondary" onclick="analyzeBestPlay()">最適打牌分析</button>
-                    <button class="btn btn-info" onclick="showAllPossibilities()">待ち牌表示</button>
-                    <button class="btn btn-secondary" onclick="riichi()">リーチ宣言</button>
-                    <button class="btn btn-info" onclick="openScenarios()">練習シナリオ</button>
-                </div>
+                <div class="analysis-panel">
+                    <h3>📊 科学的分析</h3>
 
-                <div class="wall-section">
-                    <h4>残り牌数: <span id="wallCount">70</span></h4>
-                    <div class="wall-tiles" id="wallDisplay">
-                        <!-- Wall tiles visualization -->
+                    <div class="yaku-analysis" id="yakuAnalysis">
+                        <h4>予想される役と点数</h4>
+                        <div id="yakuList">
+                            <!-- Yaku analysis will be displayed here -->
+                        </div>
+                    </div>
+
+                    <div class="analysis-card" id="ukeireContainer" style="display: none;">
+                        <h3>有効牌 (受け入れ)</h3>
+                        <div id="ukeireDisplay" class="ukeire-grid">
+                            <!-- Tiles will be injected here -->
+                        </div>
+                        <div id="ukeireCounts" class="ukeire-stats"></div>
+                    </div>
+
+                    <div class="stats-section">
+                        <div class="stat-card">
+                            <div class="stat-value" id="winProbability">0%</div>
+                            <div class="stat-label">和了確率</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="expectedValue">0</div>
+                            <div class="stat-label">期待値</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgHan">0</div>
+                            <div class="stat-label">平均翻数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="dealInRisk">0%</div>
+                            <div class="stat-label">放銃リスク</div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="analysis-panel">
-                <h3>📊 科学的分析</h3>
 
-                <div class="yaku-analysis" id="yakuAnalysis">
-                    <h4>予想される役と点数</h4>
-                    <div id="yakuList">
-                        <!-- Yaku analysis will be displayed here -->
-                    </div>
-                </div>
-
-                <div class="stats-section">
-                    <div class="stat-card">
-                        <div class="stat-value" id="winProbability">0%</div>
-                        <div class="stat-label">和了確率</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="expectedValue">0</div>
-                        <div class="stat-label">期待値</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="avgHan">0</div>
-                        <div class="stat-label">平均翻数</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="dealInRisk">0%</div>
-                        <div class="stat-label">放銃リスク</div>
-                    </div>
-                </div>
+        <!-- Analysis Results Modal -->
+        <div id="analysisModal" class="modal">
+            <div class="modal-content">
+                <h3>📊 詳細分析</h3>
+                <div id="detailedAnalysis"></div>
+                <button class="btn btn-secondary" onclick="closeModal()">閉じる</button>
             </div>
         </div>
-    </div>
 
-    <!-- Practice Scenarios Modal -->
-    <div id="scenarioModal" class="modal">
-        <div class="modal-content">
-            <h3>🎯 練習シナリオ</h3>
-            <div class="scenario-grid">
-                <div class="scenario-card" onclick="loadScenario('iishanten')">
-                    <h4>一向聴マスター</h4>
-                    <p>多面待ちと効率の練習</p>
-                    <div class="difficulty">⭐⭐⭐</div>
-                </div>
-                <div class="scenario-card" onclick="loadScenario('riichi_decision')">
-                    <h4>リーチ判断</h4>
-                    <p>リーチ宣言 vs ダマテンの判断</p>
-                    <div class="difficulty">⭐⭐⭐⭐</div>
-                </div>
-                <div class="scenario-card" onclick="loadScenario('defensive')">
-                    <h4>守備の練習</h4>
-                    <p>相手の手出し読みと安牌選択</p>
-                    <div class="difficulty">⭐⭐⭐⭐⭐</div>
-                </div>
-                <div class="scenario-card" onclick="loadScenario('yaku_building')">
-                    <h4>手役作り</h4>
-                    <p>高打点を目指す手作り</p>
-                    <div class="difficulty">⭐⭐⭐</div>
-                </div>
-                <!-- New Feature: Opponent Reading -->
-                <div class="scenario-card" onclick="loadScenario('opponent_reading')">
-                    <h4>相手の読みと心理</h4>
-                    <p>捨て牌読みと「テル」の学習</p>
-                    <div class="difficulty">⭐⭐⭐⭐</div>
-                </div>
-            </div>
-            <button class="btn btn-secondary" onclick="closeModal()">閉じる</button>
-        </div>
-    </div>
+        <!-- Toast Container -->
+        <div id="toastContainer"></div>
 
-    <!-- Analysis Results Modal -->
-    <div id="analysisModal" class="modal">
-        <div class="modal-content">
-            <h3>📊 詳細分析</h3>
-            <div id="detailedAnalysis"></div>
-            <button class="btn btn-secondary" onclick="closeModal()">閉じる</button>
-        </div>
-    </div>
-
-    <!-- Toast Container -->
-    <div id="toastContainer"></div>
-
-    <script src="src/core/mahjong-engine.js"></script>
-    <script src="src/core/yaku-calculator.js"></script>
-    <script src="src/core/probability-engine.js"></script>
-    <script src="src/core/research-integration.js"></script>
-    <script src="src/ui/ui-controller.js"></script>
+        <script src="src/core/mahjong-engine.js"></script>
+        <script src="src/core/yaku-calculator.js"></script>
+        <script src="src/core/probability-engine.js"></script>
+        <script src="src/core/scenario-validator.js"></script>
+        <script src="src/core/research-integration.js"></script>
+        <script src="src/ui/ui-controller.js"></script>
 </body>
 
 </html>

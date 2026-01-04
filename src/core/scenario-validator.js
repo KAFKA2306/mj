@@ -90,60 +90,230 @@ class ScenarioValidator {
 
     /**
      * Validates Defense scenarios.
-     * Uses a Danger Map heuristic (Suji, Honors, Genbutsu simulation).
+     * Uses a Danger Map heuristic (Genbutsu, Suji, Kabe).
      */
     validateDefense(hand, discardTile, gameState) {
-        // In a real scenario, we'd have a specific opponent discard stream.
-        // For now, we simulate "General Danger".
-        // Safe: Genbutsu (if simulated), Honors (Guests 1), Terminals (sometimes).
-        // Danger: Middle tiles (unless Suji).
+        // Opponent context from gameState (simulated or real)
+        // Expected gameState structure for defense:
+        // {
+        //   opponentDiscards: ['1m', '4p', ...],
+        //   riichiStick: true/false,
+        //   visibleTiles: { '1m': 3, ... } // For Kabe
+        // }
 
-        // Simulating a Riichi context from opposing player
-        const isSafe = this.isTheoreticallySafe(discardTile, gameState);
+        const opponentDiscards = gameState.opponentDiscards || [];
+        const isRiichi = gameState.riichiStick || false;
+        const normalizedVisibleTiles = this.normalizeVisibleTiles(gameState.visibleTiles || {});
 
-        if (isSafe) {
+        // 1. GENBUTSU (Furiten / Safe against Riichi)
+        if (this.checkGenbutsu(discardTile, opponentDiscards)) {
             return {
                 isValid: true,
                 rating: 'Excellent',
-                message: `素晴らしい！${discardTile}は比較的安全な牌です。`
+                message: `素晴らしい！「現物（Genbutsu）」です。100%安全な牌を選べています。`
             };
         }
 
-        // If dangerous, check if it was necessary (e.g. pushing for Tenpai)
+        // 2. SUJI (Safe against Ryanmen if neighbor is safe)
+        if (this.checkSuji(discardTile, opponentDiscards)) {
+            return {
+                isValid: true, // Generally valid defense
+                rating: 'Good',
+                message: `良い判断です。「スジ」を通しています。両面待ちには当たりません。`
+            };
+        }
+
+        // 3. KABE (No Chance)
+        if (this.checkKabe(discardTile, normalizedVisibleTiles)) {
+            return {
+                isValid: true,
+                rating: 'Good',
+                message: `ナイス！「壁（カベ）」を利用して安全度を判断しました。`
+            };
+        }
+
+        // 4. HONOR TILES (Guests/terminals check)
+        if (this.isHonorOrTerminal(discardTile)) {
+            // Check if live (shonpai) -> Dangerous in riichi
+            const visibleCount = normalizedVisibleTiles[discardTile] || 0;
+            const hasOpponentContext = opponentDiscards.length > 0 || Object.keys(normalizedVisibleTiles).length > 0;
+
+            // With no opponent info, honors/terminals are the default safe option.
+            if (!hasOpponentContext) {
+                return {
+                    isValid: true,
+                    rating: 'Good',
+                    message: `情報が無い状況では字牌/端牌を切って様子見するのが安全策です。`
+                };
+            }
+
+            if (visibleCount >= 3) {
+                return {
+                    isValid: true,
+                    rating: 'Great',
+                    message: `3枚以上見えている字牌/端牌です。ほぼ安全です。`
+                };
+            }
+            if (isRiichi && visibleCount === 0) {
+                return {
+                    isValid: false,
+                    rating: 'Dangerous',
+                    message: `危険！リーチに対して「生牌（ションパイ）」の字牌は危険です。`
+                };
+            }
+        }
+
+        // 4. PUSH JUDGEMENT (If keeping tenpai/iishanten)
+        // Only valid if the hand value is high enough or shanten is low enough
         const remainingHand = [...hand];
         const idx = remainingHand.indexOf(discardTile);
         if (idx > -1) remainingHand.splice(idx, 1);
         const shanten = this.engine.calculateShanten(remainingHand);
 
-        if (shanten <= 0) { // Tenpai or Win
+        if (shanten <= 0) { // Tenpai
             return {
-                isValid: true, // Risky but valid push
+                isValid: true,
                 rating: 'Aggressive',
-                message: `危険牌ですが、聴牌維持のためには勝負手です。`
+                message: `勝負！テンパイ維持のため危険牌を押しました。リスクに見合うリターンが必要です。`
             };
         }
 
         return {
             isValid: false,
             rating: 'Dangerous',
-            message: `危険です！現物やスジなど、より安全な牌を探しましょう。`
+            message: `危険です！現物、スジ、壁など、より確実な安全牌を探しましょう。`
         };
     }
 
-    // Helper for defense validation
-    isTheoreticallySafe(tile, gameState) {
-        const num = parseInt(tile.slice(0, -1));
+    // --- Safety Check Helpers ---
+
+    checkGenbutsu(tile, discards) {
+        const normalizedTile = this.normalizeRedFive(tile);
+        const normalizedDiscards = discards.map(d => this.normalizeRedFive(d));
+        return normalizedDiscards.includes(normalizedTile);
+    }
+
+    checkSuji(tile, discards) {
         const suit = tile.slice(-1);
+        if (suit === 'z') return false; // Honors have no suji
 
-        // Honors are generally safer than middle tiles
-        if (suit === 'z') return true;
+        const num = this.getTileNumber(tile);
+        const normalizedDiscards = discards.map(d => this.normalizeRedFive(d));
 
-        // Terminals
-        if (num === 1 || num === 9) return true;
+        // Suji rules:
+        // 1-4-7, 2-5-8, 3-6-9
+        // To be safe as Suji 4, 1 must be discarded (or 7). Standard is:
+        // Safe 1 if 4 is discarded.
+        // Safe 4 if 1 AND 7 are discarded (Nakasu-ji).
+        // Safe 7 if 4 is discarded.
 
-        // Simple Suji check (Simulated for validation purposes)
-        // In a full implementation, we would check against 'gameState.opponentDiscards'
+        // Simplified "Outer Suji" check for this validator (1,2,3 from 4,5,6 and 7,8,9 from 4,5,6)
+
+        // Case 1/9: Safe if 4/6 discarded
+        if (num === 1) return normalizedDiscards.includes('4' + suit);
+        if (num === 9) return normalizedDiscards.includes('6' + suit);
+
+        // Case 2/8: Safe if 5 discarded
+        if (num === 2) return normalizedDiscards.includes('5' + suit);
+        if (num === 8) return normalizedDiscards.includes('5' + suit);
+
+        // Case 3/7: Safe if 6/4 discarded
+        if (num === 3) return normalizedDiscards.includes('6' + suit);
+        if (num === 7) return normalizedDiscards.includes('4' + suit);
+
+        // Middle tiles (4,5,6) need BOTH neighbors (Nakasu-ji)
+        if (num === 4) return normalizedDiscards.includes('1' + suit) && normalizedDiscards.includes('7' + suit);
+        if (num === 5) return normalizedDiscards.includes('2' + suit) && normalizedDiscards.includes('8' + suit);
+        if (num === 6) return normalizedDiscards.includes('3' + suit) && normalizedDiscards.includes('9' + suit);
+
         return false;
+    }
+
+    checkKabe(tile, visibleTiles) {
+        const suit = tile.slice(-1);
+        if (suit === 'z') return false;
+        const num = this.getTileNumber(tile);
+
+        // No Chance: 4 visible tiles block ryanmen waits
+        // Safe N if N-1 or N-2 cannot make a run because relevant connection is dead.
+
+        // Check "One Out" Kabe (e.g., 8 is safe if 4x7 are visible) - Standard "Kabe" usually refers to finding safe outer tiles.
+        // Safe 1: 4x2 visible? No ryanmen 2-3. 
+        // Logic:
+        // To wait on X, opp needs (X-1)(X-2) or (X+1)(X+2) or (X-1)(X+1).
+
+        // Classic Kabe for Terminals/Outer:
+        // Safe 1 and 2 if 4x3 are visible? No.
+        // Safe 1: Needs 2-3 wait. If 4x2 visible, 2-3 is impossible? No.
+        // If 4x '2' are visible -> 2-3 impossible -> 1 and 4 safe from 2-3 wait.
+        // If 4x '3' are visible -> 2-3 impossible? No. 
+
+        // Standard No Chance Rules:
+        // If 4x '2' visible -> 1 is safe.
+        // If 4x '3' visible -> 1, 2 safe.
+        // If 4x '4' visible -> 2, 3 safe.
+        // If 4x '5' visible -> 3, 7 safe? No.
+        // If 4x '6' visible -> 7, 8 safe.
+        // If 4x '7' visible -> 8, 9 safe.
+        // If 4x '8' visible -> 9 safe.
+
+        const getCount = (n) => {
+            const base = visibleTiles[n + suit] || 0;
+            if (n === 5) {
+                // Red fives count toward the four-visible wall
+                return base + (visibleTiles['0' + suit] || 0);
+            }
+            return base;
+        };
+
+        if (num === 1) return getCount(2) === 4 || getCount(3) === 4; // 2-3 or 3-? blocked
+        if (num === 2) return getCount(3) === 4;
+        if (num === 3) return getCount(4) === 4;
+        // 4,5,6 less likely to be full safe just by one Kabe
+        if (num === 7) return getCount(6) === 4;
+        if (num === 8) return getCount(7) === 4;
+        if (num === 9) return getCount(8) === 4 || getCount(7) === 4;
+
+        return false;
+    }
+
+    isHonorOrTerminal(tile) {
+        const num = this.getTileNumber(tile);
+        const suit = tile.slice(-1);
+        return suit === 'z' || num === 1 || num === 9;
+    }
+
+    normalizeRedFive(tile) {
+        if (!tile) return tile;
+        const suit = tile.slice(-1);
+        const num = tile.slice(0, -1);
+        if (num === '0') return '5' + suit;
+        return tile;
+    }
+
+    normalizeVisibleTiles(visibleTiles) {
+        const merged = { ...visibleTiles };
+        ['m', 'p', 's'].forEach(suit => {
+            const redKey = '0' + suit;
+            if (visibleTiles[redKey]) {
+                merged['5' + suit] = (merged['5' + suit] || 0) + visibleTiles[redKey];
+            }
+        });
+        return merged;
+    }
+
+    getTileNumber(tile) {
+        const num = parseInt(tile.slice(0, -1));
+        if (num === 0) return 5; // Treat red fives as standard 5s
+        return num;
+    }
+
+    /**
+     * Helper for defense validation (Legacy/Simple check)
+     */
+    isTheoreticallySafe(tile, gameState) {
+        // Fallback to detailed check
+        return this.validateDefense([], tile, gameState).isValid;
     }
 
     /**
