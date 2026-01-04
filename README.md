@@ -66,7 +66,7 @@ AIが「なぜその牌を切るのか？」という思考プロセスを、ミ
 
 本機は以下の論文・理論に基づいて構築されています。
 
-> *Li, J. et al. (2024). "Tjong: A Transformer-based Mahjong AI with Hierarchical Decision Making."*
+> *Li, X. et al. (2024). "Tjong: A Transformer-based Mahjong AI with Hierarchical Decision Making."*
 
 - **Supervised Learning**: 天鳳鳳凰卓 54万ゲームの学習
 - **Reward Variance Reduction**: 強化学習における報酬分散の抑制
