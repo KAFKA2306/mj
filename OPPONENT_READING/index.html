@@ -1,0 +1,1266 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../ARCHITECTURE/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>相手の読みと心理 - 麻雀練習マシン (Mahjong Practice Machine)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href=".." title="麻雀練習マシン (Mahjong Practice Machine)" class="md-header__button md-logo" aria-label="麻雀練習マシン (Mahjong Practice Machine)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            麻雀練習マシン (Mahjong Practice Machine)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              相手の読みと心理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="タブ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  ホーム
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ARCHITECTURE/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  アーキテクチャ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  研究・コラム
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="麻雀練習マシン (Mahjong Practice Machine)" class="md-nav__button md-logo" aria-label="麻雀練習マシン (Mahjong Practice Machine)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    麻雀練習マシン (Mahjong Practice Machine)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アーキテクチャ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    研究・コラム
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    研究・コラム
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    相手の読みと心理
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    相手の読みと心理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 捨て牌分析（基本）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 防御理論（守りのセオリー）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 防御理論（守りのセオリー）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-suji" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 スジ（Suji）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-kabe-no-chance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 カベ（Kabe - No Chance）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-sotogawa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 外側（Sotogawa）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-betaori-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 ベタオリの手順 (Betaori Algorithm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 応用防御技術
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 待ち読み技術（一点読みのロジック）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 待ち読み技術（一点読みのロジック）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-matagi-suji" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 跨ぎスジ（Matagi-Suji）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-ura-suji" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 裏スジ（Ura-Suji）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-aida-yon-ken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 間四ケン（Aida-Yon-Ken）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-context-yaku" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 状況判断と役読み (Context &amp; Yaku)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 状況判断と役読み (Context &amp; Yaku)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-contextual-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 状況別の読み (Contextual Reading)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 強者レベルの安全度判断
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-yaku-specific-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 役別の読み (Yaku-Specific Reading)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-naki-yomi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 副露読み (Naki-Yomi)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ai-digital-ai-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. デジタル・AI理論 (Digital &amp; AI Theory)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. デジタル・AI理論 (Digital &amp; AI Theory)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 統計データによる裏付け
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 AI視点の「読み」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-oracle-guiding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 先知情報による学習 (Oracle Guiding)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-global-reward-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 全局収支予測 (Global Reward Prediction)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-practical-drills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 実践ドリル (Practical Drills)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 捨て牌分析（基本）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 防御理論（守りのセオリー）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 防御理論（守りのセオリー）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-suji" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 スジ（Suji）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-kabe-no-chance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 カベ（Kabe - No Chance）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-sotogawa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 外側（Sotogawa）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-betaori-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 ベタオリの手順 (Betaori Algorithm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 応用防御技術
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 待ち読み技術（一点読みのロジック）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 待ち読み技術（一点読みのロジック）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-matagi-suji" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 跨ぎスジ（Matagi-Suji）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-ura-suji" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 裏スジ（Ura-Suji）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-aida-yon-ken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 間四ケン（Aida-Yon-Ken）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-context-yaku" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 状況判断と役読み (Context &amp; Yaku)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 状況判断と役読み (Context &amp; Yaku)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-contextual-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 状況別の読み (Contextual Reading)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 強者レベルの安全度判断
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-yaku-specific-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 役別の読み (Yaku-Specific Reading)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-naki-yomi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 副露読み (Naki-Yomi)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ai-digital-ai-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. デジタル・AI理論 (Digital &amp; AI Theory)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. デジタル・AI理論 (Digital &amp; AI Theory)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 統計データによる裏付け
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 AI視点の「読み」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-oracle-guiding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 先知情報による学習 (Oracle Guiding)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-global-reward-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 全局収支予測 (Global Reward Prediction)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-practical-drills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 実践ドリル (Practical Drills)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">麻雀における相手の読みと技術論</h1>
+<h2 id="_2">概要</h2>
+<p>麻雀で相手の手牌を読む技術は、大きく分けて「捨て牌分析（理詰め）」と「心理的な読み（癖・テル）」の2つに分類されます。本ドキュメントでは、捨て牌から論理的に危険牌を推測する技術、副露（鳴き）読み、役への対応、そして最新のAI研究に基づく高度な戦術を解説します。</p>
+<h2 id="1">1. 捨て牌分析（基本）</h2>
+<p>相手の捨て牌（河）は、情報の宝庫です。最も重要なのは「手出し」と「ツモ切り」の違いを見極めることです。</p>
+<ul>
+<li>
+<p><strong>ツモ切り（暗い表示/グレー等）</strong>:</p>
+<ul>
+<li>ツモった牌をそのまま捨てる行為。</li>
+<li><strong>意味</strong>: 手牌が進行していない、または変化させる価値がない。</li>
+<li><strong>読み</strong>: ツモ切りが長く続く場合、そのプレイヤーは「テンパイしている」か、完全にオリている「ベタオリ」状態の可能性が高いです。</li>
+</ul>
+</li>
+<li>
+<p><strong>手出し（明るい表示/通常等）</strong>:</p>
+<ul>
+<li>手牌の中から牌を選んで捨てる行為。</li>
+<li><strong>意味</strong>: 手の構成が変化した、あるいは安全牌と入れ替えた。</li>
+<li><strong>読み</strong>:<ul>
+<li><strong>関連牌の所持</strong>: 手出しされた牌の周辺は、手牌の中に持っていた可能性が高いです。また、その周辺が危険になる（または安全になる）ヒントになります。</li>
+<li><strong>安牌保持</strong>: 危険な生牌（ションパイ）を残して安全牌を手出しした場合、攻撃態勢（イーシャンテンやテンパイ）であることを強く示唆します。</li>
+<li><strong>空切り</strong>: テンパイしているが、手牌にある牌と同じ牌をツモった時にわざと手牌の方を切ることで、まだノーテンのように見せかける技術です。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2">2. 防御理論（守りのセオリー）</h2>
+<p>放銃（ロンされること）を避けるための論理的な防御技術です。</p>
+<h3 id="21-suji">2.1 スジ（Suji）</h3>
+<p>両面待ちに対する安全度の理論です。相手が両面待ちの場合、特定の牌が通っていれば、その「スジ」にあたる牌も通る可能性が高いという考え方です。</p>
+<ul>
+<li><strong>1-4-7の法則</strong>: 「4」が捨てられていれば、相手は「23」や「56」の両面待ちで待てないため、「1」と「7」は両面待ちに対して安全です。</li>
+<li><strong>2-5-8の法則</strong>: 「5」が捨てられていれば、「2」と「8」は両面待ちに対して安全です。</li>
+<li><strong>3-6-9の法則</strong>: 「6」が捨てられていれば、「3」と「9」は両面待ちに対して安全です。</li>
+</ul>
+<p><strong>注意</strong>: スジはあくまで「両面待ち」に対する安全です。カンチャン、ペンチャン、単騎待ちには通用しませんが、確率は大幅に下がります。</p>
+<h3 id="22-kabe-no-chance">2.2 カベ（Kabe - No Chance）</h3>
+<p>自分の手牌と見えている牌を利用して、相手が待ちを作れないことを証明する理論です。</p>
+<ul>
+<li><strong>ノーチャンス</strong>: ある数牌が場に4枚すべて見えている場合、その牌を使った順子（シュンツ）は作れません。<ul>
+<li>例: 「8」が4枚見えている → 相手は「78」や「89」の形を持てない → 「9」で待つ（6789、789）ことが物理的に不可能 → <strong>「9」は安全</strong>。</li>
+</ul>
+</li>
+<li><strong>ワンチャンス</strong>: 3枚見えている場合。残り1枚を相手が持っていなければ安全ですが、ノーチャンスほどの信頼度はありません。</li>
+</ul>
+<h3 id="23-sotogawa">2.3 外側（Sotogawa）</h3>
+<p>序盤に捨てられた数牌の外側（1寄りまたは9寄りの牌）は比較的安全というセオリーです。</p>
+<ul>
+<li>例: 序盤（1段目）に「4」が捨てられている場合、その外側の「1」「2」「3」は比較的安全。</li>
+<li>理由: 序盤に「4」を捨てるということは、「234」や「345」といった順子を作る意思がなかった（あるいはすでに足りている）可能性が高いため、その周辺で待っている可能性が下がります。</li>
+</ul>
+<h3 id="24-betaori-algorithm">2.4 ベタオリの手順 (Betaori Algorithm)</h3>
+<p>放銃を回避するためのアルゴリズム的な手順。</p>
+<ol>
+<li><strong>現物 (Genbutsu)</strong>: 100%安全な牌を切る。</li>
+<li><strong>合わせ打ち</strong>: 直前のプレイヤーが切った牌を切る。</li>
+<li><strong>スジ・壁・ワンチャンス</strong>: 確率的に安全な牌を探す。</li>
+<li><strong>暗刻の端牌</strong>: 自分で3枚持っている1・9牌などは、シャンポン待ち以外に当たらないため比較的安全。</li>
+<li><strong>地獄待ち警戒</strong>: 字牌単騎（特に地獄単騎）は、見た目枚数が少なくてもケアする必要があります。</li>
+</ol>
+<h3 id="25">2.5 応用防御技術</h3>
+<ul>
+<li><strong>回し打ち（Mawashi-uchi）</strong>: 完全にオリるのではなく、安全な牌を切りつつ、テンパイの可能性を残す打ち方。</li>
+<li><strong>合わせ打ち（Awase-uchi）</strong>: 上家が切った牌と同じ牌を即座に切る。同巡内フリテンにより100%安全。</li>
+</ul>
+<h2 id="3">3. 待ち読み技術（一点読みのロジック）</h2>
+<p>相手の捨て牌の特定のパターンから、具体的な待ちを推測する技術です。</p>
+<h3 id="31-matagi-suji">3.1 跨ぎスジ（Matagi-Suji）</h3>
+<p>「リーチ宣言牌」や「テンパイ直前の手出し牌」の周辺（跨ぎ）は危険という理論。</p>
+<ul>
+<li><strong>理論</strong>: 多くの場合、テンパイ直前まで両面変化などを期待して、将来の待ちに関連する牌を持っています。</li>
+<li><strong>例</strong>: 「5」を手出ししてリーチ → 「5」をまたぐ「3-6」や「4-7」待ちが本線（危険）となります。</li>
+</ul>
+<h3 id="32-ura-suji">3.2 裏スジ（Ura-Suji）</h3>
+<p>序盤に切られた牌の「裏側」に当たるスジが危険になる理論。</p>
+<ul>
+<li><strong>基本</strong>: 「5」が切られたら、「1-4」または「6-9」が危険。</li>
+<li><strong>理由</strong>: 「135」から5を切って1-3固定（2待ち）→その後変化して1-4待ちになる、などの手作り手順から導かれます。</li>
+</ul>
+<h3 id="33-aida-yon-ken">3.3 間四ケン（Aida-Yon-Ken）</h3>
+<p>同色の数牌が「4つ飛ばし」で捨てられている場合、その間のエリア（内側）が非常に危険という理論。</p>
+<ul>
+<li><strong>例</strong>: 「3」と「8」が捨てられている場合（間が4、5、6、7の4つ）。</li>
+<li><strong>読み</strong>: 「3」や「8」はいらないが、「4567」周辺の牌で手がまとまっている可能性が高く、この「間」の牌が待ちになっている（あるいは危険牌である）ケースが多いです。</li>
+</ul>
+<h2 id="4-context-yaku">4. 状況判断と役読み (Context &amp; Yaku)</h2>
+<h3 id="41-contextual-reading">4.1 状況別の読み (Contextual Reading)</h3>
+<p>読みは盤面のフェーズによって有効性が異なります。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">フェーズ</th>
+<th style="text-align: left;">読みの焦点</th>
+<th style="text-align: left;">セオリー</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>序盤 (1-6巡目)</strong></td>
+<td style="text-align: left;"><strong>手役と速度</strong></td>
+<td style="text-align: left;">字牌や1/9牌の切り出し順を見る。役牌絞りは有効か？染め手の気配はあるか？</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中盤 (7-12巡目)</strong></td>
+<td style="text-align: left;"><strong>ターツ構成</strong></td>
+<td style="text-align: left;">手出しされた中張牌周辺（跨ぎ）を警戒。安直なドラ切りはテンパイ濃厚サイン。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>終盤 (13-18巡目)</strong></td>
+<td style="text-align: left;"><strong>危険牌一点読み</strong></td>
+<td style="text-align: left;">残りスジの本数を数える。テンパイノーテンの判断で押し引きを決める。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42">4.2 強者レベルの安全度判断</h3>
+<p>単なる「スジだから安全」ではなく、以下の優先度で厳密に守備を選択します。</p>
+<ol>
+<li><strong>完全安牌 (Genbutsu)</strong>: リーチ者、同巡フリテンの牌。</li>
+<li><strong>ノーチャンス (Wall)</strong>: 壁（4枚見え）で否定された牌。</li>
+<li><strong>合わせ打ちの中筋</strong>: 上家が切り、リーチ者のスジでもある牌。</li>
+<li><strong>序盤切りの外側</strong>: 早いリーチに対する、早い段階で切られた牌の外側（1/9）。</li>
+<li><strong>スジの1/9牌</strong>: シャンポンや単騎に当たる確率は残るが、両面は否定される。</li>
+<li><strong>字牌の生牌</strong>: <strong>危険</strong>。特にファン牌（役牌）の生牌は、スジよりも放銃率が高いことがあるため要注意。</li>
+</ol>
+<h3 id="43-yaku-specific-reading">4.3 役別の読み (Yaku-Specific Reading)</h3>
+<ul>
+<li><strong>染め手</strong>: 余剰牌（溢れ）が出たらテンパイ濃厚。他色の雑な切り出しは染め手サイン。</li>
+<li><strong>国士無双</strong>: 序盤から中張牌がバラ切りされる。終盤に1・9・字牌が余らない、または1枚切れ字牌の手出しは要注意。</li>
+<li><strong>トイトイ</strong>: 2副露以上でトイツ場の気配（中張牌の手出し対子落とし等）。生牌が極めて危険。</li>
+</ul>
+<h3 id="44-naki-yomi">4.4 副露読み (Naki-Yomi)</h3>
+<ul>
+<li><strong>食い伸ばし</strong>: 「2」をチーして「5」切りなど、スライドや複合形からの変化を読む。</li>
+<li><strong>役バック</strong>: 役牌が見えていないのに数牌から鳴く場合、役牌バック（後付け）の可能性大。</li>
+</ul>
+<h2 id="5-ai-digital-ai-theory">5. デジタル・AI理論 (Digital &amp; AI Theory)</h2>
+<p>現代の「科学する麻雀」やAI（Suphx, NAGA等）から導き出された高度な理論です。</p>
+<h3 id="51">5.1 統計データによる裏付け</h3>
+<ul>
+<li><strong>リーチへの危険度</strong>: 無筋（10-15%） vs スジ（2-5%）。生牌字牌は無筋並みに危険（約10%）。</li>
+<li><strong>先制リーチ</strong>: 愚形でも先制なら即リーチが期待値的に有利。</li>
+</ul>
+<h3 id="52-ai">5.2 AI視点の「読み」</h3>
+<ul>
+<li><strong>逆順切り</strong>: 弱い牌より強い牌が先に切られる（例：1より3が先）＝手が整っている、または特定役狙い。</li>
+<li><strong>ラグ読み (Latency Reading)</strong>: ネット麻雀特有。鳴きボタン反応による「間」から、対子や塔子の存在を確定させる。</li>
+</ul>
+<h3 id="53-oracle-guiding">5.3 先知情報による学習 (Oracle Guiding)</h3>
+<p>AIは「全情報が見える状態」での学習を経て推論精度を高めています。人間も<strong>「見えている情報（捨て牌・副露・点数）」だけを根拠</strong>に論理的に手牌を限定すべきであり、直感に頼るべきではありません。</p>
+<h3 id="54-global-reward-prediction">5.4 全局収支予測 (Global Reward Prediction)</h3>
+<p>「その局の勝負」ではなく「最終順位」を最大化する判断。
+*   <strong>トップ目</strong>: 些細なリスクも極端に回避（過剰なオリが正解）。
+*   <strong>ラス目</strong>: 多少の危険を無視してでも自身のアガリを最大化する。</p>
+<h2 id="6-practical-drills">6. 実践ドリル (Practical Drills)</h2>
+<ul>
+<li><strong>「何切る」ではなく「何持ってる」</strong>: 捨て牌から相手の手牌構成（ブロック）を逆算する。</li>
+<li><strong>ラグ読み</strong>: ネット麻雀でのラグ牌をメモし、終局後に確認する。</li>
+<li><strong>牌譜検討</strong>: AI解析ツールを用いて、自分の放銃だけでなく相手の打牌理由を追求する。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
