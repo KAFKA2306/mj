@@ -504,18 +504,18 @@ class UIController {
 
     // User interaction handlers
     handleTileClick(event) {
-        const tile = event.target.dataset.tile;
         const index = parseInt(event.target.dataset.index);
 
-        if (this.selectedTiles.has(index)) {
-            this.selectedTiles.delete(index);
-            event.target.classList.remove('selected');
-        } else {
-            this.selectedTiles.add(index);
-            event.target.classList.add('selected');
-        }
+        // Instant judgment: Clear previous, select new, and check immediately
+        this.clearSelection();
+
+        this.selectedTiles.add(index);
+        event.target.classList.add('selected');
 
         this.updateSelectionActions();
+
+        // Trigger immediate analysis/judgment
+        this.checkDiscard();
     }
 
     updateSelectionActions() {

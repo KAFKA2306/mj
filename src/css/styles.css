@@ -131,8 +131,9 @@ body {
 .ukeire-grid .tile {
     width: 36px;
     height: 50px;
-    font-size: 24px;
+    font-size: 36px;
     margin: 0;
+    line-height: 1;
 }
 
 .ukeire-count {
@@ -165,7 +166,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 54px;
     font-weight: bold;
     color: #333;
     cursor: pointer;
@@ -173,6 +174,8 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     user-select: none;
     font-family: "Noto Sans CJK", "MS Gothic", "NSimSun", "SimSun", monospace;
+    padding: 0;
+    line-height: 1;
 }
 
 .tile.fallback {
@@ -192,7 +195,7 @@ body {
 }
 
 .tile.tsumo-tile {
-    margin-left: 20px;
+    margin-left: 40px;
 }
 
 .controls {
@@ -583,7 +586,7 @@ body {
     .tile {
         width: 40px;
         height: 56px;
-        font-size: 20px;
+        font-size: 40px;
     }
 
     .header h1 {
@@ -619,6 +622,7 @@ body {
         margin: 5px 0;
     }
 }
+
 /* Active Training Buttons */
 .btn-success {
     background: linear-gradient(45deg, #4CAF50, #81C784);
