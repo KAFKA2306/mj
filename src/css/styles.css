@@ -5,9 +5,10 @@
 }
 
 body {
-    font-family: 'Noto Sans JP', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: radial-gradient(circle at 50% -20%, #001A2E, #05050A);
+    background-color: #05050A;
+    color: #FFFFFF;
     min-height: 100vh;
     overflow-x: hidden;
 }
