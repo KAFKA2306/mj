@@ -1,0 +1,21 @@
+{
+  "id": "coach-demo-v1",
+  "title": "教室・コーチ向け 12問デモ",
+  "focus": "mixed-coaching",
+  "difficulty": "beginner-intermediate",
+  "version": "1.0.0",
+  "scenarios": [
+    {"id":"demo-01","sourceScenarioType":"efficiency_test","prompt":"牌効率の候補を比較する 1","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-02","sourceScenarioType":"efficiency_test","prompt":"牌効率の候補を比較する 2","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-03","sourceScenarioType":"efficiency_test","prompt":"牌効率の候補を比較する 3","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-04","sourceScenarioType":"defensive_play","prompt":"守備候補を比較する 1","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-05","sourceScenarioType":"defensive_play","prompt":"守備候補を比較する 2","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-06","sourceScenarioType":"defensive_play","prompt":"守備候補を比較する 3","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-07","sourceScenarioType":"riichi_decision","prompt":"リーチ判断を比較する 1","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-08","sourceScenarioType":"riichi_decision","prompt":"リーチ判断を比較する 2","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-09","sourceScenarioType":"riichi_decision","prompt":"リーチ判断を比較する 3","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-10","sourceScenarioType":"complex_wait_patterns","prompt":"待ち形候補を比較する","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-11","sourceScenarioType":"opponent_reading","prompt":"相手情報から候補を比較する 1","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-12","sourceScenarioType":"opponent_reading","prompt":"相手情報から候補を比較する 2","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}}
+  ]
+}

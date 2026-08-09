@@ -11,6 +11,8 @@ nav:
   - アーキテクチャ: ARCHITECTURE.md
   - 研究・コラム:
     - "相手の読みと心理": OPPONENT_READING.md
+  - 教室・コーチ向け:
+    - "弱点別トレーニング課題パック": business/coach-training-packs.md
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true

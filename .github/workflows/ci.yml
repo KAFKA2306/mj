@@ -19,6 +19,8 @@ jobs:
           node-version: 20
       - name: Run validation
         run: node tests/validation-test.js
+      - name: Validate training-pack contract
+        run: node tests/training-pack-test.js
 
   deploy-docs:
     needs: test

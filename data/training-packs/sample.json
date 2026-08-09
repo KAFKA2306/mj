@@ -1,0 +1,14 @@
+{
+  "id": "coach-sample-v1",
+  "title": "弱点別トレーニング 5問サンプル",
+  "focus": "mixed-foundations",
+  "difficulty": "beginner-intermediate",
+  "version": "1.0.0",
+  "scenarios": [
+    {"id":"sample-01","sourceScenarioType":"efficiency_test","prompt":"牌効率の観点で次の一手を比較する","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"sample-02","sourceScenarioType":"defensive_play","prompt":"守備優先時の候補を比較する","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"sample-03","sourceScenarioType":"riichi_decision","prompt":"リーチとダマの判断材料を比較する","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"sample-04","sourceScenarioType":"complex_wait_patterns","prompt":"待ち形の選択肢を比較する","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"sample-05","sourceScenarioType":"opponent_reading","prompt":"相手情報を踏まえた選択肢を比較する","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "windowDays": 60,
+  "privacy": "aggregate-only",
+  "events": {
+    "sample_pack_started": 0,
+    "sample_pack_completed": 0,
+    "coach_demo_opened": 0,
+    "coach_inquiry_started": 0,
+    "qualified_inquiry": 0,
+    "paid_pilot": 0
+  },
+  "notes": "Update only from observed events. Do not infer or backfill commercial success. Learner names, raw game records, email addresses, and other personal data are out of scope for this ledger."
+}
