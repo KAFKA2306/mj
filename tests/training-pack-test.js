@@ -31,6 +31,8 @@ assert.ok(demo.scenarios.length >= 10, 'coach demo must contain at least 10 scen
 for (const pack of [sample, demo]) {
   for (const scenario of pack.scenarios) {
     assert.ok(knownScenarioTypes.has(scenario.sourceScenarioType), `unknown source scenario: ${scenario.sourceScenarioType}`);
+    assert.ok(scenario.context.length > 10, `${scenario.id}: concrete context is required`);
+    assert.ok(!scenario.choices.some(choice => /^候補[Ａ-ＺA-Z]$/.test(choice)), `${scenario.id}: placeholder choices are forbidden`);
     assert.strictEqual(
       evaluateAnswer(scenario, scenario.choices[0]),
       TRAINING_RESULT.REVIEW_REQUIRED,
@@ -42,16 +44,18 @@ for (const pack of [sample, demo]) {
 const scorableFixture = {
   id: 'scorable-fixture',
   sourceScenarioType: 'efficiency_test',
-  choices: ['A', 'B', 'C'],
-  answerPolicy: { mode: 'SCORABLE', recommended: ['A'], acceptable: ['B'] }
+  prompt: 'validated fixture',
+  context: 'fixture context with concrete tiles 1m 2m 3m',
+  choices: ['1m', '2m', '3m'],
+  answerPolicy: { mode: 'SCORABLE', recommended: ['1m'], acceptable: ['2m'] }
 };
-assert.strictEqual(evaluateAnswer(scorableFixture, 'A'), TRAINING_RESULT.MATCH);
-assert.strictEqual(evaluateAnswer(scorableFixture, 'B'), TRAINING_RESULT.ACCEPTABLE);
-assert.strictEqual(evaluateAnswer(scorableFixture, 'C'), TRAINING_RESULT.INVALID);
+assert.strictEqual(evaluateAnswer(scorableFixture, '1m'), TRAINING_RESULT.MATCH);
+assert.strictEqual(evaluateAnswer(scorableFixture, '2m'), TRAINING_RESULT.ACCEPTABLE);
+assert.strictEqual(evaluateAnswer(scorableFixture, '3m'), TRAINING_RESULT.INVALID);
 
 const stableUrl = stablePackUrl('https://kafka2306.github.io/mj/', sample);
 assert.ok(stableUrl.includes('pack=coach-sample-v1'));
-assert.ok(stableUrl.includes('version=1.0.0'));
+assert.ok(stableUrl.includes('version=1.1.0'));
 
 const summary = summarizeResults(sample, [
   { scenarioId: sample.scenarios[0].id, status: TRAINING_RESULT.REVIEW_REQUIRED },
@@ -70,8 +74,18 @@ assert.deepStrictEqual(
 assert.strictEqual(ledger.events.paid_pilot, 0, 'commercial KPI ledger must start from observed zero, not fabricated success');
 
 assert.throws(
-  () => validatePack({ ...sample, scenarios: [{ ...sample.scenarios[0], answerPolicy: { mode: 'REVIEW_REQUIRED', recommended: ['A'], acceptable: [] } }] }),
+  () => validatePack({ ...sample, scenarios: [{ ...sample.scenarios[0], answerPolicy: { mode: 'REVIEW_REQUIRED', recommended: ['1m'], acceptable: [] } }] }),
   /cannot assert recommended\/acceptable/
+);
+
+assert.throws(
+  () => validatePack({ ...sample, scenarios: [{ ...sample.scenarios[0], choices: ['候補A', '1m'] }] }),
+  /placeholder choice is not distributable/
+);
+
+assert.throws(
+  () => validatePack({ ...sample, scenarios: [{ ...sample.scenarios[0], context: '' }] }),
+  /scenario.context must be a non-empty string/
 );
 
 console.log('✅ training-pack contract tests passed');
