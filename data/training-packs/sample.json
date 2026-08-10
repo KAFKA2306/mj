@@ -3,12 +3,47 @@
   "title": "弱点別トレーニング 5問サンプル",
   "focus": "mixed-foundations",
   "difficulty": "beginner-intermediate",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "scenarios": [
-    {"id":"sample-01","sourceScenarioType":"efficiency_test","prompt":"牌効率の観点で次の一手を比較する","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"sample-02","sourceScenarioType":"defensive_play","prompt":"守備優先時の候補を比較する","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"sample-03","sourceScenarioType":"riichi_decision","prompt":"リーチとダマの判断材料を比較する","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"sample-04","sourceScenarioType":"complex_wait_patterns","prompt":"待ち形の選択肢を比較する","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"sample-05","sourceScenarioType":"opponent_reading","prompt":"相手情報を踏まえた選択肢を比較する","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}}
+    {
+      "id": "sample-01",
+      "sourceScenarioType": "efficiency_test",
+      "prompt": "14枚から1枚切るとき、どの牌を残すかを牌効率の観点で比較してください。",
+      "context": "手牌: 1m 2m 3m 4m 5m 6m 7p 8p 9p 3s 4s 2s 5z 5z。候補以外の局面情報は固定しません。",
+      "choices": ["2s", "3s", "5z"],
+      "answerPolicy": {"mode": "REVIEW_REQUIRED", "recommended": [], "acceptable": []}
+    },
+    {
+      "id": "sample-02",
+      "sourceScenarioType": "defensive_play",
+      "prompt": "対面リーチに対して、放銃回避を優先する打牌候補を比較してください。",
+      "context": "対面の捨て牌に1mと7pがある。見えている牌の総数と他家の副露情報は未入力。",
+      "choices": ["1m", "5s", "7p"],
+      "answerPolicy": {"mode": "REVIEW_REQUIRED", "recommended": [], "acceptable": []}
+    },
+    {
+      "id": "sample-03",
+      "sourceScenarioType": "riichi_decision",
+      "prompt": "リーチとダマを比較し、判断に必要な追加情報も挙げてください。",
+      "context": "門前テンパイ、10巡目、子、持ち点25000、ドラ1。待ち形・場況・他家速度は未検証。",
+      "choices": ["リーチ", "ダマ"],
+      "answerPolicy": {"mode": "REVIEW_REQUIRED", "recommended": [], "acceptable": []}
+    },
+    {
+      "id": "sample-04",
+      "sourceScenarioType": "complex_wait_patterns",
+      "prompt": "待ち形を言語化し、残り枚数を数えるために必要な見えている牌を整理してください。",
+      "context": "萬子部分: 2m 3m 4m 4m 5m。ほかの完成メンツと雀頭は固定済みとする。",
+      "choices": ["両面中心で確認", "嵌張・辺張を含めて確認", "複合形として全候補を列挙"],
+      "answerPolicy": {"mode": "REVIEW_REQUIRED", "recommended": [], "acceptable": []}
+    },
+    {
+      "id": "sample-05",
+      "sourceScenarioType": "opponent_reading",
+      "prompt": "河から断定せず、追加で確認すべき情報を優先順位づけしてください。",
+      "context": "対面の河: 9m, 1p, 2p, 8s, 5z, 3m。副露なし。巡目・ドラ・手出しツモ切り区別は未入力。",
+      "choices": ["手出し・ツモ切りを確認", "見えている牌総数を確認", "河だけで待ちを断定"],
+      "answerPolicy": {"mode": "REVIEW_REQUIRED", "recommended": [], "acceptable": []}
+    }
   ]
 }
