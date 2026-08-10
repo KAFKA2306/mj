@@ -7,6 +7,8 @@ const TRAINING_RESULT = Object.freeze({
   INVALID: 'INVALID'
 });
 
+const PLACEHOLDER_CHOICE = /^(?:候補[Ａ-ＺA-Z]|choice\s*[a-z0-9]+)$/i;
+
 function assertNonEmptyString(value, field) {
   if (typeof value !== 'string' || value.trim() === '') {
     throw new Error(`${field} must be a non-empty string`);
@@ -22,10 +24,21 @@ function validatePack(pack) {
   for (const scenario of pack.scenarios) {
     assertNonEmptyString(scenario.id, 'scenario.id');
     assertNonEmptyString(scenario.sourceScenarioType, 'scenario.sourceScenarioType');
+    assertNonEmptyString(scenario.prompt, 'scenario.prompt');
+    assertNonEmptyString(scenario.context, 'scenario.context');
     if (ids.has(scenario.id)) throw new Error(`duplicate scenario id: ${scenario.id}`);
     ids.add(scenario.id);
     if (!Array.isArray(scenario.choices) || scenario.choices.length < 2) {
       throw new Error(`${scenario.id}: choices must have at least 2 items`);
+    }
+    if (new Set(scenario.choices.map(String)).size !== scenario.choices.length) {
+      throw new Error(`${scenario.id}: choices must be unique`);
+    }
+    for (const choice of scenario.choices) {
+      assertNonEmptyString(String(choice), `${scenario.id}: choice`);
+      if (PLACEHOLDER_CHOICE.test(String(choice).trim())) {
+        throw new Error(`${scenario.id}: placeholder choice is not distributable: ${choice}`);
+      }
     }
     const policy = scenario.answerPolicy;
     if (!policy || typeof policy !== 'object') throw new Error(`${scenario.id}: answerPolicy is required`);
