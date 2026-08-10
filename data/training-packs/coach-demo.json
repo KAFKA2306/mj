@@ -3,19 +3,19 @@
   "title": "教室・コーチ向け 12問デモ",
   "focus": "mixed-coaching",
   "difficulty": "beginner-intermediate",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "scenarios": [
-    {"id":"demo-01","sourceScenarioType":"efficiency_test","prompt":"牌効率の候補を比較する 1","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-02","sourceScenarioType":"efficiency_test","prompt":"牌効率の候補を比較する 2","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-03","sourceScenarioType":"efficiency_test","prompt":"牌効率の候補を比較する 3","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-04","sourceScenarioType":"defensive_play","prompt":"守備候補を比較する 1","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-05","sourceScenarioType":"defensive_play","prompt":"守備候補を比較する 2","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-06","sourceScenarioType":"defensive_play","prompt":"守備候補を比較する 3","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-07","sourceScenarioType":"riichi_decision","prompt":"リーチ判断を比較する 1","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-08","sourceScenarioType":"riichi_decision","prompt":"リーチ判断を比較する 2","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-09","sourceScenarioType":"riichi_decision","prompt":"リーチ判断を比較する 3","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-10","sourceScenarioType":"complex_wait_patterns","prompt":"待ち形候補を比較する","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-11","sourceScenarioType":"opponent_reading","prompt":"相手情報から候補を比較する 1","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
-    {"id":"demo-12","sourceScenarioType":"opponent_reading","prompt":"相手情報から候補を比較する 2","choices":["候補A","候補B","候補C"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}}
+    {"id":"demo-01","sourceScenarioType":"efficiency_test","prompt":"14枚から1枚切る候補を比較し、受け入れの考え方を説明してください。","context":"手牌: 1m 2m 3m 4m 5m 6m 7p 8p 9p 2s 3s 6s 6s 9s。","choices":["9s","2s","6s"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-02","sourceScenarioType":"efficiency_test","prompt":"孤立牌と連続形を比較し、残す牌の理由を説明してください。","context":"手牌: 2m 3m 4m 6m 7m 2p 3p 4p 5s 6s 7s 1z 1z 9p。","choices":["9p","6m","1z"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-03","sourceScenarioType":"efficiency_test","prompt":"対子を残すか連続形を残すか、受け入れと将来形を比較してください。","context":"手牌: 3m 4m 5m 7m 8m 2p 3p 4p 4s 5s 6s 2z 2z 8s。","choices":["8s","7m","2z"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-04","sourceScenarioType":"defensive_play","prompt":"リーチ者の現物を含む候補から安全度を比較してください。","context":"上家がリーチ。上家の河に2mと8pがある。見えている牌総数は未入力。","choices":["2m","5s","8p"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-05","sourceScenarioType":"defensive_play","prompt":"現物が複数あるとき、手牌価値を壊しにくい候補を比較してください。","context":"対面がリーチ。対面の河に3sと6mがある。自手は1向聴。詳細な受け入れ枚数は未検証。","choices":["3s","6m","7p"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-06","sourceScenarioType":"defensive_play","prompt":"安全情報が不足する局面で、断定せずに比較すべき材料を整理してください。","context":"下家がリーチ。河は9m, 1p, 4s, 7z。壁情報と手出しツモ切り区別は未入力。","choices":["河の現物を再確認","壁情報を追加確認","無情報の牌を安全と断定"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-07","sourceScenarioType":"riichi_decision","prompt":"先制テンパイでリーチとダマを比較し、必要な追加情報を列挙してください。","context":"8巡目、子、門前テンパイ、ドラ0、持ち点25000。待ち形と場況は未入力。","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-08","sourceScenarioType":"riichi_decision","prompt":"高打点テンパイでリーチとダマを比較してください。","context":"11巡目、親、門前テンパイ、ダマでも役あり。具体的な翻数・待ち・他家速度は未検証。","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-09","sourceScenarioType":"riichi_decision","prompt":"終盤テンパイでリーチ判断に必要なリスク情報を整理してください。","context":"15巡目、子、門前テンパイ。他家1名が仕掛けている。点棒状況・待ち・打点は未入力。","choices":["リーチ","ダマ"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-10","sourceScenarioType":"complex_wait_patterns","prompt":"複合形から待ち候補を漏れなく列挙する手順を説明してください。","context":"筒子部分: 3p 4p 4p 5p 6p 6p 7p。ほかの部分は完成済みとする。見えている牌は未入力。","choices":["形を分解して候補列挙","見た目だけで一種に限定","残り枚数確認まで保留"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-11","sourceScenarioType":"opponent_reading","prompt":"河の変化から仮説を立て、断定を避けるための追加観測を選んでください。","context":"対面の河: 1m, 9m, 2p, 8p, 4s, 7s。副露なし。手出しツモ切り区別は未入力。","choices":["手出し・ツモ切りを確認","巡目とドラを確認","河だけで待ちを一意に断定"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}},
+    {"id":"demo-12","sourceScenarioType":"opponent_reading","prompt":"副露者への対応で、見えている情報と未観測情報を分離してください。","context":"上家が中をポン。河: 9p, 1s, 2m, 8m。ドラ表示牌・手出しツモ切り・副露時点は未入力。","choices":["副露時点を確認","ドラ表示牌を確認","役と待ちを即断"],"answerPolicy":{"mode":"REVIEW_REQUIRED","recommended":[],"acceptable":[]}}
   ]
 }
