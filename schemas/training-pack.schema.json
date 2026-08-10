@@ -17,11 +17,12 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "sourceScenarioType", "prompt", "choices", "answerPolicy"],
+        "required": ["id", "sourceScenarioType", "prompt", "context", "choices", "answerPolicy"],
         "properties": {
           "id": {"type": "string", "minLength": 1},
           "sourceScenarioType": {"type": "string", "minLength": 1},
           "prompt": {"type": "string", "minLength": 1},
+          "context": {"type": "string", "minLength": 1},
           "choices": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
           "answerPolicy": {
             "oneOf": [
