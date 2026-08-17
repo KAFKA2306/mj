@@ -1,6 +1,7 @@
 # 🀄 Solo Mahjong Practice Machine
 Scientific training platform with AI analysis.
 
+[![CI](https://github.com/KAFKA2306/mj/actions/workflows/ci.yml/badge.svg)](https://github.com/KAFKA2306/mj/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Pages](https://img.shields.io/badge/PLAY-BROWSER-brightgreen?style=for-the-badge)](https://kafka2306.github.io/mj/)
 [![Research](https://img.shields.io/badge/AI-TJONG%20TRANSFORMER-blue?style=for-the-badge)](https://github.com/KAFKA2306/mj)
