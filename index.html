@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>一人麻雀練習機 - 科学的トレーニングプラットフォーム</title>
+    <title>一人麻雀練習機 - 打牌判断トレーニング</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
     <div class="container">
         <div class="header">
             <h1>🀄 一人麻雀練習機</h1>
-            <p>期待値分析機能を搭載した科学的トレーニングプラットフォーム</p>
+            <p>配牌から打牌候補を比較し、判断理由を振り返るための練習ツール</p>
             <div class="header-controls">
                 <button class="btn btn-primary" onclick="newHand()">配牌</button>
                 <button id="btnDiscard" class="btn btn-success" onclick="checkDiscard()" disabled>打牌チェック</button>
@@ -116,19 +116,19 @@
 
                     <div class="stats-section">
                         <div class="stat-card">
-                            <div class="stat-value" id="winProbability">0%</div>
+                            <div class="stat-value" id="winProbability">—</div>
                             <div class="stat-label">和了確率</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="expectedValue">0</div>
+                            <div class="stat-value" id="expectedValue">—</div>
                             <div class="stat-label">期待値</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="avgHan">0</div>
+                            <div class="stat-value" id="avgHan">—</div>
                             <div class="stat-label">平均翻数</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="dealInRisk">0%</div>
+                            <div class="stat-value" id="dealInRisk">—</div>
                             <div class="stat-label">放銃リスク</div>
                         </div>
                     </div>
